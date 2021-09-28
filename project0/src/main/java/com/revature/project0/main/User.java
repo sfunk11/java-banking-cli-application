@@ -84,6 +84,19 @@ public class User {
 		this.hasAccount = hasAccount;
 	}
 	
-	
+	public void createAccount(double amount) {
+		
+		String accountName = this.name.replace(" ","").toLowerCase();
+		Account accountName = new Account(amount, this.name);
+		this.hasAccount = true;
+		
+		
+		
+	}
+	public void approveAccount(String name) {
+		if (this.isEmployee() || this.isAdmin()) {
+			
+		}
+	}
 
 }

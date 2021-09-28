@@ -4,15 +4,20 @@ public class Account {
 
 	private double balance;
 	private String owner;
+	private boolean isApproved = false;
+	private final String accountName;
 	
 	
-	public Account() {
+	public Account(String owner) {
 		this.balance = 0;
+		this.owner = owner;
+		this.accountName = owner.replaceAll(" ", "");
 	}
 
 	public Account(double balance, String owner) {
 		this.balance = balance;
-		this.owner = owner;
+		this.owner = owner.replaceAll(" ", "");
+		this.accountName = owner.replaceAll(" ", "");
 	}
 
 	public double getBalance() {
@@ -31,11 +36,35 @@ public class Account {
 		this.owner = owner;
 	}
 	
+	
+	public boolean isApproved() {
+		return isApproved;
+	}
+
+	public void setApproved(boolean isApproved) {
+		this.isApproved = isApproved;
+	}
+	
+	
+
+	public int getAccountNumber() {
+		return accountNumber;
+	}
+
 	public void deposit(double amount) {
-		double newBalance = this.getBalance() + amount;
-		this.setBalance(newBalance);
-		System.out.println("Thank you for your deposit. Your new balance is $"+ this.getBalance() + ".");
-		LogDriver.log.info("Deposit: "+ amount);
+		try {
+			if (!isApproved) {
+				double newBalance = this.getBalance() + amount;
+				this.setBalance(newBalance);
+				System.out.println("Thank you for your deposit. Your new balance is $"+ this.getBalance() + ".");
+				LogDriver.log.info("Deposit: "+ amount);
+			} else {
+				throw new RuntimeException("This account has not yet been approved by the bank.  Please try again later.");
+			}
+		}
+		catch (Exception e) {
+			//Add in present main menu screen
+		}
 	}
 	
 	public void withdraw(double amount) {
