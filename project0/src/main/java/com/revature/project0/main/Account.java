@@ -47,30 +47,42 @@ public class Account {
 	
 	
 
-	public int getAccountNumber() {
-		return accountNumber;
+	public String getAccountName() {
+		return this.accountName;
 	}
 
 	public void deposit(double amount) {
 		try {
-			if (!isApproved) {
+			if (isApproved) {
 				double newBalance = this.getBalance() + amount;
 				this.setBalance(newBalance);
 				System.out.println("Thank you for your deposit. Your new balance is $"+ this.getBalance() + ".");
 				LogDriver.log.info("Deposit: "+ amount);
 			} else {
 				throw new RuntimeException("This account has not yet been approved by the bank.  Please try again later.");
-			}
+			}	
 		}
 		catch (Exception e) {
 			//Add in present main menu screen
+			LogDriver.log.error("Attempted transaction on unapproved account.");
 		}
 	}
 	
 	public void withdraw(double amount) {
-		double newBalance = this.getBalance() - amount;
-		this.setBalance(newBalance);
-		System.out.println("Thank you for your withdrawal. Your new balance is $"+ this.getBalance() + ".");
-		LogDriver.log.info("Withdrawal: " + amount);
+		try {
+			if (isApproved) {
+				double newBalance = this.getBalance() - amount;
+				this.setBalance(newBalance);
+				System.out.println("Thank you for your withdrawal. Your new balance is $"+ this.getBalance() + ".");
+				LogDriver.log.info("Withdrawal: " + amount);
+			} else {
+				throw new RuntimeException("This account has not yet been approved by the bank.  Please try again later.");
+			}
+		}
+		catch (Exception e) {
+			// add in present main menu screen
+			LogDriver.log.error("Attempted transaction on unapproved account.");
+		}
+	
 	}
 }
