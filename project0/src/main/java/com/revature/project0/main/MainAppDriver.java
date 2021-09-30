@@ -2,7 +2,7 @@ package com.revature.project0.main;
 
 import java.util.Scanner;
 
-import com.revature.project0.gui.*;
+import com.revature.project0.ui.*;
 
 
 public class MainAppDriver {

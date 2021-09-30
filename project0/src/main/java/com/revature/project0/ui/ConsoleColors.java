@@ -1,4 +1,4 @@
-package com.revature.project0.gui;
+package com.revature.project0.ui;
 
 public class ConsoleColors {
     // Reset
