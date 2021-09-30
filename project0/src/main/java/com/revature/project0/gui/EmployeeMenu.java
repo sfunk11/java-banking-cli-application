@@ -17,6 +17,7 @@ public class EmployeeMenu implements Screen {
 		determineNext(conInput, inputChoice);
 	}
 	
+	@Override
 	public void determineNext(Scanner conInput, int choice) {
 		if (choice == 1) {
 			//go to view account options

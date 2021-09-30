@@ -9,5 +9,10 @@ public class MainMenu implements Screen {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public void determineNext(Scanner conInput, int choice) {
+		
+	}
 
 }
