@@ -6,11 +6,11 @@ import java.util.Objects;
 import java.util.Optional;
 import com.revature.project0.main.User;
 
-public class UserDao implements Dao<User> {
+public class UserDaoImpl implements Dao<User> {
 
 private List<User> users = new ArrayList<>();
     
-    public UserDao() {
+    public UserDaoImpl() {
         users.add(new User("Michael","Thompson", "mthompson@email.com"));
     }
     
