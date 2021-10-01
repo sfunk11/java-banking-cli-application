@@ -2,67 +2,67 @@ package com.revature.project0.data;
 
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.model.Food;
 import com.revature.project0.models.User;
 
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl implements GenericDao<User> {
 
-private List<User> users = new ArrayList<>();
-private static final String URL = "jdbc:postgresql://revature-2109-java.cmeofp2uiqe0.us-east-2.rds.amazonaws.com:5432/bankdb";
-private static final String username = "bankuser";
-private static final String password = "P4ssw0rd";
+	private BankDBConnection bankCon;
 
 @Override
-public List<User> getAllUsers() {
-	try(Connection con = DriverManager.getConnection(URL, username, password)){
+public List<User> getAll() {
+	 List<User> userList = new ArrayList<>();
+	 
+	 try(Connection con = bankCon.getDBConnection()){
+		 
+		 String sql = "select * from creature_card";
+		 PreparedStatement ps = con.prepareStatement(sql);
+		 ResultSet rs = ps.executeQuery();
+		 
+		 while (rs.next()) {
+			 userList.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), 
+				 rs.getString(4), rs.getString(5), rs.getBoolean(6), rs.getBoolean(7), 
+				 rs.getInt(8), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getInt(13), 
+				 rs.getString(14)));
+		 }
+		 
+		 
+		 
+	 } catch (SQLException e) {
 		
-		String sql = "select * from users";
-		
-		PreparedStatement ps = con.prepareStatement(sql);
-		ResultSet rs = ps.executeQuery();
-		
-		while(rs.next()) {
-			users.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3)));
-		}
-		
-	} catch (SQLException e) {
 		e.printStackTrace();
 	}
 
-	return foodList;
-}
-	return null;
+	return userList;
 }
 
 @Override
-public User getUser() {
+public User getByName(String name) {
 	// TODO Auto-generated method stub
 	return null;
 }
 
 @Override
-public void insertUser() {
+public void update(User t) {
 	// TODO Auto-generated method stub
 	
 }
 
 @Override
-public void updateUser() {
+public void insert(User t) {
 	// TODO Auto-generated method stub
 	
 }
 
 @Override
-public void deleteUser() {
+public void delete(User t) {
 	// TODO Auto-generated method stub
 	
 }
-    
-} 
+
+}

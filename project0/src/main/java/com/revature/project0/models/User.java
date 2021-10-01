@@ -14,6 +14,7 @@ public class User {
 	private String city;
 	private String state;
 	private int zipCode;
+	private String email;
 	
 	public User() {	
 	}
@@ -21,7 +22,7 @@ public class User {
 	
 	public User(int userid, String firstName, String lastName, String username, String password, boolean isAdmin,
 			boolean isEmployee, int phoneNumber, int streetNumber, String streetName, String city, String state,
-			int zipCode) {
+			int zipCode, String email) {
 		super();
 		this.userid = userid;
 		this.firstName = firstName;
@@ -36,6 +37,7 @@ public class User {
 		this.city = city;
 		this.state = state;
 		this.zipCode = zipCode;
+		this.email = email;
 	}
 
 
