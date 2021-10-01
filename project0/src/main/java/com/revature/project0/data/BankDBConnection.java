@@ -1,21 +1,33 @@
 package com.revature.project0.data;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class BankDBConnection {
 
 	
-
-		// this utility class is to create connections to our db, to help eliminate repeated code. it will also make it more 
-		// testable.
+	ClassLoader cl = getClass().getClassLoader();
+	InputStream is;
+	Properties p = new Properties();
 		
-		private static final String URL = "jdbc:postgresql://revature-2109-java.cmeofp2uiqe0.us-east-2.rds.amazonaws.com:5432/bankdb";
-		private static final String USERNAME = "bankuser";
-		private static final String PASSWORD = "P4ssw0rd";
+	public BankDBConnection () {
+		is = cl.getResourceAsStream("connection.properties");
+		try {
+			p.load(is);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 		
 		public Connection getDBConnection() throws SQLException {
+			final String URL = p.getProperty("url");
+			final String USERNAME = p.getProperty("username");
+			final String PASSWORD = p.getProperty("password");
+			
 			return DriverManager.getConnection(URL, USERNAME, PASSWORD);
 		}
 	}

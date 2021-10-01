@@ -30,9 +30,7 @@ public List<User> getAll() {
 				 rs.getInt(8), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getInt(13), 
 				 rs.getString(14)));
 		 }
-		 
-		 
-		 
+		 	 	 
 	 } catch (SQLException e) {
 		
 		e.printStackTrace();
