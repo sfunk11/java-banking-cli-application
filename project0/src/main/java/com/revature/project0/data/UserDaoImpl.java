@@ -13,6 +13,18 @@ import com.revature.project0.models.User;
 public class UserDaoImpl implements GenericDao<User> {
 
 	private BankDBConnection bankCon;
+	
+	public UserDaoImpl() {
+		
+	}
+	
+
+public UserDaoImpl(BankDBConnection bankCon) {
+		super();
+		this.bankCon = bankCon;
+	}
+
+
 
 @Override
 public List<User> getAll() {
@@ -20,7 +32,7 @@ public List<User> getAll() {
 	 
 	 try(Connection con = bankCon.getDBConnection()){
 		 
-		 String sql = "select * from creature_card";
+		 String sql = "select * from users";
 		 PreparedStatement ps = con.prepareStatement(sql);
 		 ResultSet rs = ps.executeQuery();
 		 
