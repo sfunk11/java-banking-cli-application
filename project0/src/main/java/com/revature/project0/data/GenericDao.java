@@ -6,7 +6,7 @@ public interface GenericDao <T> {
 
 	List<T> getAll();
 	
-	T getByName(String name);
+	T getByUsername(String name);
 	
 	void update(T t);
 	

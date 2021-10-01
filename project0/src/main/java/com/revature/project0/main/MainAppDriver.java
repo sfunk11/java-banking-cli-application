@@ -23,6 +23,7 @@ public class MainAppDriver {
 	BankDBConnection dbcon = new BankDBConnection();
 	UserDaoImpl uDao = new UserDaoImpl(dbcon);
 	System.out.println(uDao.getAll());
+	System.out.println(uDao.getByUsername("sfunk"));
 	
 	
 	}
