@@ -26,4 +26,4 @@ $$ language 'plpgsql'
 
 select insert_basicuser('Sam', 'Funk', 'sfunk', 'password','sfunk@email.com');
 
-select * from users where username = 'sfunk';
+
