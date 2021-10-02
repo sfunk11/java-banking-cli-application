@@ -1,9 +1,11 @@
 package com.revature.project0.data;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,19 +100,55 @@ public class AccountDaoImpl implements AccountDao{
 
 	@Override
 	public void update(Account t) {
-		// TODO Auto-generated method stub
+		try(Connection con = bankCon.getDBConnection()){
+			
+			String sql = "{? = update_account(?,?,?,?)}";
+			CallableStatement cs = con.prepareCall(sql);
+			cs.registerOutParameter(1, Types.VARCHAR);
+			cs.setInt(2, t.getAccountID());
+			cs.setInt(3,t.getOwnerid());
+			cs.setDouble(4, t.getBalance());
+			cs.setBoolean (5, t.isApproved());
+			cs.execute();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 		
 	}
 
 	@Override
 	public void insert(Account t) {
-		// TODO Auto-generated method stub
+		try(Connection con = bankCon.getDBConnection()){
+			
+			String sql = "{? = insert_account (?,?)}";
+			CallableStatement cs = con.prepareCall(sql);
+			cs.registerOutParameter(1, Types.VARCHAR);
+			cs.setInt(2,t.getOwnerid());
+			cs.setDouble(3, t.getBalance());
+			cs.execute();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 		
 	}
 
 	@Override
 	public void delete(Account t) {
-		// TODO Auto-generated method stub
+		try(Connection con = bankCon.getDBConnection()){
+			
+			String sql = "delete from accounts where accountid = ?";
+			PreparedStatement cs = con.prepareStatement(sql);
+			cs.setInt(1,t.getAccountID());
+			cs.execute();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 		
 	}
 

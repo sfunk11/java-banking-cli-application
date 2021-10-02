@@ -87,7 +87,7 @@ public void update(User t) {
 	try(Connection con = bankCon.getDBConnection()){
 		 
 		
-		 String sql = "{? = update_user(?,?,?,?,?,?,?,?)";
+		 String sql = "{? = update_user(?,?,?,?,?,?,?,?)}";
 		CallableStatement ps = con.prepareCall(sql);
 		 ps.registerOutParameter(1,  Types.VARCHAR);
 		 ps.setString(2, t.getFirstName());
