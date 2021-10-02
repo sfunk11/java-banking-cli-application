@@ -5,7 +5,7 @@ import java.util.List;
 import com.revature.project0.data.AccountDaoImpl;
 import com.revature.project0.main.LogDriver;
 import com.revature.project0.models.Account;
-import com.revature.project0.models.User;
+
 
 public class AccountService {
 	
@@ -38,7 +38,7 @@ public class AccountService {
 			
 			LogDriver.log.error("Attempted transaction on unapproved account.");
 		}
-		//Add in present main menu screen
+		
 	}
 	
 	public void withdraw(Account a, double amount) {
@@ -57,7 +57,6 @@ public class AccountService {
 			LogDriver.log.error("Attempted transaction on unapproved account.");
 		}
 		
-		//add in logic to present main menu screen
 	
 	}
 	

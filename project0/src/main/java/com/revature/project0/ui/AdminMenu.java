@@ -2,12 +2,15 @@ package com.revature.project0.ui;
 
 import java.util.Scanner;
 
+import com.revature.project0.services.AccountService;
+import com.revature.project0.services.UserService;
+
 public class AdminMenu implements Screen {
 
 	static int inputChoice;
 
 	@Override
-	public void render(Scanner conInput) {
+	public void render(Scanner conInput, UserService uDao, AccountService aDao) {
 		System.out.println(ConsoleColors.RED + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@            Administrator Menu Options:            @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@        1. View/Edit Customer Information          @@@@@@@@@@@@@@@@@@@");
@@ -16,12 +19,14 @@ public class AdminMenu implements Screen {
 		System.out.println("@@@@@@@@@@@@@@        4. Close Customer Account                  @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);
 		inputChoice = conInput.nextInt();
-		determineNext(conInput, inputChoice);
 	}
 	
 	@Override
-	public void determineNext(Scanner conInput, int choice) {
-		switch (choice) {
+	public Screen determineNext() {
+		
+		Screen nextScreen = new AdminMenu();
+		try {
+		switch (inputChoice) {
 			case 1:
 				//go to view / edit information window 
 				break;
@@ -37,6 +42,10 @@ public class AdminMenu implements Screen {
 			default:
 				//throw input not valid exception and show menu again;
 		}
+		}catch (Exception e) {
+			nextScreen = new AdminMenu();
+		}
+		return nextScreen;
 	}
 
 
