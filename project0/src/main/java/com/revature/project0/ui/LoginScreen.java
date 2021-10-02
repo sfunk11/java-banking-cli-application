@@ -24,9 +24,10 @@ public class LoginScreen implements Screen {
 		System.out.println("Enter your password:");
 		inputPassword = conInput.nextLine();
 		user = uDao.logIn(inputUsername, inputPassword);
-		if(user.getFirstName() != null) {
+		if(user != null) {
 			System.out.println("Welcome back, "+ user.getFirstName() + "!");
-		
+		} else {
+			System.out.println("There was an error logging you in.");
 		}
 		
 	}
@@ -35,7 +36,11 @@ public class LoginScreen implements Screen {
 	public Screen determineNext() {
 		Screen nextScreen;
 		
-		
+		if (user == null) {
+			nextScreen = new LoginScreen();
+			return nextScreen;
+		}
+		System.out.println(user);
 		if (user.isAdmin()) {
 			nextScreen = new AdminMenu();
 		} else if (user.isEmployee()) {

@@ -27,10 +27,12 @@ public class MainAppDriver {
 		
 		Screen presentScreen = new OpeningScreen();
 		
-		presentScreen.render(conInput, uServ, aServ);
-		presentScreen = new LoginScreen();
-		presentScreen.render(conInput, uServ, aServ);	
-		presentScreen.determineNext();
+		System.out.println(uDao.getAll());
+		
+//		while(presentScreen != null) {
+//		presentScreen.render(conInput, uServ, aServ);
+//		presentScreen = presentScreen.determineNext();
+//		}
 	
 	
 	}
