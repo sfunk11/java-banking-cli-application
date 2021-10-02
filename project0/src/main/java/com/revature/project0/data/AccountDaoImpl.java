@@ -103,7 +103,7 @@ public class AccountDaoImpl implements AccountDao{
 	public void update(Account t) {
 		try(Connection con = bankCon.getDBConnection()){
 			
-			String sql = "{? = update_account(?,?,?,?)}";
+			String sql = "{? = call update_account(?,?,?,?)}";
 			CallableStatement cs = con.prepareCall(sql);
 			cs.registerOutParameter(1, Types.VARCHAR);
 			cs.setInt(2, t.getAccountID());
@@ -123,7 +123,7 @@ public class AccountDaoImpl implements AccountDao{
 	public void insert(Account t) {
 		try(Connection con = bankCon.getDBConnection()){
 			
-			String sql = "{? = insert_account (?,?)}";
+			String sql = "{? = call insert_account (?,?)}";
 			CallableStatement cs = con.prepareCall(sql);
 			cs.registerOutParameter(1, Types.VARCHAR);
 			cs.setInt(2,t.getOwnerid());

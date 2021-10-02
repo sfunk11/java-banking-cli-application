@@ -34,13 +34,11 @@ public class LoginScreen implements Screen {
 
 	@Override
 	public Screen determineNext() {
-		Screen nextScreen;
+		Screen nextScreen = new LoginScreen();
 		
 		if (user == null) {
-			nextScreen = new LoginScreen();
 			return nextScreen;
 		}
-		System.out.println(user);
 		if (user.isAdmin()) {
 			nextScreen = new AdminMenu();
 		} else if (user.isEmployee()) {

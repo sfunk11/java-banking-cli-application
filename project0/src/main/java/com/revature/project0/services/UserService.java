@@ -23,8 +23,8 @@ public class UserService {
 	public User logIn(String username, String password) {
 		try {
 			User user = uDao.getByUsername(username);
-			System.out.println("inside login");
-			if (user.getPassword() == password) {
+			
+			if (user.getPassword().equals(password.trim())) {
 				return user;
 			} else {
 				throw new IllegalArgumentException("There is no user with that username.");
@@ -36,6 +36,22 @@ public class UserService {
 		}
 		
 		
+		return null;
+	}
+	
+	public User createUser(User user) {
+		
+		try {
+			uDao.insert(user);
+			User newUser = uDao.getByUsername(user.getUsername());
+			if (newUser.getFirstName() != null) {
+				return newUser;
+			} else {
+				throw new RuntimeException("Something went wrong.");
+			}
+		}catch (Exception e) {
+			LogDriver.log.error(e);
+		}
 		return null;
 	}
 }
