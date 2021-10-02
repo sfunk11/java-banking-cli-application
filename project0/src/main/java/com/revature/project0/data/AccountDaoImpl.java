@@ -9,6 +9,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.revature.project0.main.LogDriver;
 import com.revature.project0.models.Account;
 
 
@@ -42,8 +43,8 @@ public class AccountDaoImpl implements AccountDao{
 			 }
 			 	 	 
 		 } catch (SQLException e) {
+			 LogDriver.log.error("Database error");
 			
-			e.printStackTrace();
 		}
 
 		return accountList;
@@ -66,8 +67,8 @@ public class AccountDaoImpl implements AccountDao{
 			 }
 			 	 	 
 		 } catch (SQLException e) {
+			 LogDriver.log.error("Database error");
 			
-			e.printStackTrace();
 		}
 
 		return accountList;
@@ -80,7 +81,7 @@ public class AccountDaoImpl implements AccountDao{
 		
 		try(Connection con = bankCon.getDBConnection()){
 						
-			 String sql = "select * from accounts a inner join users u on a.ownerid = u.userid where u.userid= ?";
+			 String sql = "select * from accounts a inner join users u on a.ownerid = u.userid where a.accountid= ?";
 			 PreparedStatement ps = con.prepareStatement(sql);
 			 ps.setInt(1, accountid);
 			 ResultSet rs = ps.executeQuery();
@@ -92,8 +93,8 @@ public class AccountDaoImpl implements AccountDao{
 			 }
 			 	 	 
 		 } catch (SQLException e) {
-			
-			e.printStackTrace();
+			 LogDriver.log.error("Database error");
+		
 		}
 		return account;
 	}
@@ -112,8 +113,8 @@ public class AccountDaoImpl implements AccountDao{
 			cs.execute();
 			
 		} catch (SQLException e) {
+			LogDriver.log.error("Database error");
 			
-			e.printStackTrace();
 		}
 		
 	}
@@ -130,8 +131,8 @@ public class AccountDaoImpl implements AccountDao{
 			cs.execute();
 			
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
+			LogDriver.log.error("Database error");
+		
 		}
 		
 	}
@@ -146,8 +147,8 @@ public class AccountDaoImpl implements AccountDao{
 			cs.execute();
 			
 		} catch (SQLException e) {
+			LogDriver.log.error("Database error");
 			
-			e.printStackTrace();
 		}
 		
 	}
