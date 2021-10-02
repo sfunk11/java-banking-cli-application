@@ -87,7 +87,7 @@ public void update(User t) {
 	try(Connection con = bankCon.getDBConnection()){
 		 
 		
-		 String sql = "{? = update_user(?,?,?,?,?,?,?,?)}";
+		 String sql = "{? = call update_user(?,?,?,?,?,?,?,?)}";
 		CallableStatement ps = con.prepareCall(sql);
 		 ps.registerOutParameter(1,  Types.VARCHAR);
 		 ps.setString(2, t.getFirstName());
@@ -113,7 +113,7 @@ public void insert(User t) {
 	try(Connection con = bankCon.getDBConnection()){
 		 
 		
-		 String sql = "{ ? = insert_BasicUser(?,?,?,?,?)";
+		 String sql = "{? = call insert_BasicUser(?,?,?,?,?)}";
 		 CallableStatement cs = con.prepareCall(sql);
 		 cs.registerOutParameter(1, Types.VARCHAR);
 		 cs.setString(2, t.getFirstName());
