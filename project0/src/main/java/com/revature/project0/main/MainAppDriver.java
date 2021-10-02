@@ -8,6 +8,7 @@ import com.revature.project0.data.UserDaoImpl;
 import com.revature.project0.models.User;
 import com.revature.project0.services.AccountService;
 import com.revature.project0.services.UserService;
+import com.revature.project0.ui.ConsoleColors;
 import com.revature.project0.ui.OpeningScreen;
 import com.revature.project0.ui.Screen;
 
@@ -28,17 +29,17 @@ public class MainAppDriver {
 		
 		Screen presentScreen = new OpeningScreen();
 		
-		User test = new User("John", "Smith", "jsmith", "password");
 		
+		while(presentScreen != null) {
+		presentScreen.render(conInput, uServ, aServ);
+		presentScreen = presentScreen.determineNext();
+		}
 		
-		System.out.println(uDao.getAll());
-		uDao.insert(test);
-		
-//		while(presentScreen != null) {
-//		presentScreen.render(conInput, uServ, aServ);
-//		presentScreen = presentScreen.determineNext();
-//		}
-	
+		System.out.println(ConsoleColors.BLUE + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		System.out.println("@@@@@@@@@@@@@@          Thank you for using Sam's Bank!          @@@@@@@@@@@@@@@@@@@");
+		System.out.println("@@@@@@@@@@@@@@                  Have a Great Day!                @@@@@@@@@@@@@@@@@@@");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);
+
 	
 	}
 	
