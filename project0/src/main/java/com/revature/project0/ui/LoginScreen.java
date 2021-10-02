@@ -15,7 +15,7 @@ public class LoginScreen implements Screen {
 	
 
 	@Override
-	public void render(Scanner conInput, UserService uDao, AccountService aDao) {
+	public User render(Scanner conInput, UserService uDao, AccountService aDao, User currentUser) {
 		System.out.println(ConsoleColors.BLUE + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@                   Please Log In                   @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);
@@ -23,12 +23,14 @@ public class LoginScreen implements Screen {
 		inputUsername = conInput.nextLine();
 		System.out.println("Enter your password:");
 		inputPassword = conInput.nextLine();
-		user = uDao.logIn(inputUsername, inputPassword);
+		currentUser = uDao.logIn(inputUsername, inputPassword);
+		user = currentUser;
 		if(user != null) {
 			System.out.println("Welcome back, "+ user.getFirstName() + "!");
 		} else {
 			System.out.println("There was an error logging you in.");
 		}
+		return currentUser;
 		
 	}
 

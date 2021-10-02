@@ -17,7 +17,7 @@ public class CreationScreen implements Screen {
 	
 	
 	@Override
-	public void render(Scanner conInput, UserService uDao, AccountService aDao) {
+	public User render(Scanner conInput, UserService uDao, AccountService aDao, User currentUser) {
 		System.out.println(ConsoleColors.CYAN + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@            Welcome to the User Creator            @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);
@@ -30,6 +30,7 @@ public class CreationScreen implements Screen {
 		newUser = uDao.createUser(prepareUser(fullName, username, password));
 		System.out.println("Would you like to do anything else?");
 		choice = conInput.nextLine();
+		return newUser;
 	}
 
 	@Override

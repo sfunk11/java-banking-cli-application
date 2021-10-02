@@ -60,7 +60,27 @@ public class AccountService {
 	
 	}
 	
-	public void displaySingleAccount(int accountID) {
+	public void transfer(Account from, Account to, double amount) {
+		try {
+			if (from.isApproved() && to.isApproved()) {
+				double newBalance = from.getBalance() - amount;
+				from.setBalance(newBalance);
+				aDao.update(from);
+				newBalance = to.getBalance()+ amount;
+				to.setBalance(newBalance);
+				aDao.update(to);
+			} else {
+				throw new RuntimeException("One of these accounts has not yet been approved by the bank.  Please try again later.");
+			}
+		}
+		catch (Exception e) {
+			LogDriver.log.error("Attempted transaction on unapproved account.");
+		}
+		
+	
+	}
+	
+	public Account displaySingleAccount(int accountID) {
 	try {	
 		Account account = aDao.getAccountbyID(accountID);
 		
@@ -69,12 +89,14 @@ public class AccountService {
 		}
 		System.out.println("Account Number: " + account.getAccountID());
 		System.out.println("Account Balance: " + account.getBalance());
+		return account;
 	} catch(Exception e) {
 		LogDriver.log.error("No accounts with number: " + accountID);
 	}
+	return null;
 	}
 	
-	public void displayListAccountsByOwner(String username) {
+	public List<Account> displayListAccountsByOwner(String username) {
 	try {	
 		List<Account> accountList = aDao.getByUsername(username);
 		
@@ -87,9 +109,11 @@ public class AccountService {
 			System.out.println("Account Number: " + a.getAccountID());
 			System.out.println("Account Balance: " + a.getBalance());
 			System.out.println("----------------------------");
+		return accountList;
 		}
 	} catch(Exception e) {
 		LogDriver.log.error("No accounts for user: " + username);
 	}
+	return null;
 	}
 }
