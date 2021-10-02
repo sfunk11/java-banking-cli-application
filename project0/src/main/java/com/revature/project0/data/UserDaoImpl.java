@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.revature.project0.models.User;
 
-public class UserDaoImpl implements GenericDao<User> {
+public class UserDaoImpl implements UserDao {
 
 	private BankDBConnection bankCon;
 	
@@ -41,8 +41,7 @@ public List<User> getAll() {
 		 while (rs.next()) {
 			 userList.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), 
 				 rs.getString(4), rs.getString(5), rs.getBoolean(6), rs.getBoolean(7), 
-				 rs.getInt(8), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getInt(13), 
-				 rs.getString(14)));
+				 rs.getString(8)));
 		 }
 		 	 	 
 	 } catch (SQLException e) {
@@ -69,9 +68,8 @@ public User getByUsername(String username) {
 		
 		 while (rs.next()) {
 		 user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), 
-				 rs.getString(4), rs.getString(5), rs.getBoolean(6), rs.getBoolean(7), 
-				 rs.getInt(8), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getInt(13), 
-				 rs.getString(14));
+				 rs.getString(4), rs.getString(5), rs.getBoolean(6), rs.getBoolean(7),  
+				 rs.getString(8));
 		 }
 		 return user;
 		 
@@ -86,7 +84,27 @@ public User getByUsername(String username) {
 
 @Override
 public void update(User t) {
-	// TODO Auto-generated method stub
+	try(Connection con = bankCon.getDBConnection()){
+		 
+		
+		 String sql = "{? = update_user(?,?,?,?,?,?,?,?)";
+		CallableStatement ps = con.prepareCall(sql);
+		 ps.registerOutParameter(1,  Types.VARCHAR);
+		 ps.setString(2, t.getFirstName());
+		 ps.setString(3, t.getLastName());
+		 ps.setString(4, t.getUsername());
+		 ps.setString(5, t.getPassword());
+		 ps.setBoolean(6, t.isAdmin());
+		 ps.setBoolean(7, t.isEmployee());
+		 ps.setString(8, t.getEmail());
+		 ps.setInt(9, t.getUserid());
+		 ps.execute();
+		 
+		 	 	 
+	 } catch (SQLException e) {
+		
+		e.printStackTrace();
+	}
 	
 }
 
