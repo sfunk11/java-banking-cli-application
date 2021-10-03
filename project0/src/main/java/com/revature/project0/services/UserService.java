@@ -1,5 +1,9 @@
 package com.revature.project0.services;
 
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.revature.project0.data.UserDaoImpl;
 import com.revature.project0.main.LogDriver;
 import com.revature.project0.models.User;
@@ -7,6 +11,7 @@ import com.revature.project0.models.User;
 public class UserService {
 
 	private UserDaoImpl uDao;
+	private Scanner conInput = new Scanner(System.in);
 	
 	public UserService() {
 	}
@@ -54,4 +59,37 @@ public class UserService {
 		}
 		return null;
 	}
+	
+	public void displayUserInfo(User user) {
+		
+	}
+	
+	public User updateEmail(User user, String email) {
+		try {
+			String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+			Pattern p = Pattern.compile(regex);
+			Matcher matcher = p.matcher(email);
+			if (matcher.matches()) {
+				user.setEmail(email);
+				uDao.update(user);
+			} else {
+				throw new RuntimeException("That is not a properly formatted email.");
+			}
+		}catch(Exception e) {
+			LogDriver.log.error(e);
+			System.out.println("Please enter the email address you would like to use:");
+			String newEmail = conInput.nextLine();
+			updateEmail(user,newEmail);
+		}
+		return user;
+	}
+	
+	public User updatePassword(User user, String password) {
+	
+		user.setPassword(password);
+		uDao.update(user);
+		return user;
+	}
+	
+	
 }
