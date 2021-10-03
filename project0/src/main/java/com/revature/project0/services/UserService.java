@@ -33,7 +33,7 @@ public class UserService {
 			if (user.getPassword().equals(password.trim())) {
 				return user;
 			} else {
-				throw new IllegalArgumentException("There is no user with that username.");
+				throw new IllegalArgumentException("That username and password do not match any users.");
 			}
 			
 			
