@@ -171,4 +171,14 @@ public class AccountService {
 		aDao.update(account);
 		
 	}
+	
+	
+	public void closeAccount(int accountId) {
+		
+		aDao.delete(accountId);
+		
+	}
+	
+	
+	
 }

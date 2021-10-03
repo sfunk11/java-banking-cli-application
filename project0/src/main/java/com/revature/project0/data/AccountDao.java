@@ -18,5 +18,5 @@ public interface AccountDao {
 	
 	void insert (Account t);
 	
-	void delete (Account t);
+	void delete (int accountId);
 }

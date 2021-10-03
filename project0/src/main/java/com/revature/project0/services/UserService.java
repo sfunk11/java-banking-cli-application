@@ -97,7 +97,8 @@ public class UserService {
 	}
 	
 	public void removeUser(User user) {
-		
+			uDao.delete(user);	
+	
 	}
 	
 	public List<User> listAllCustomers() {

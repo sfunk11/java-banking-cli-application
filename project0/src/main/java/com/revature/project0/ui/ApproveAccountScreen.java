@@ -41,7 +41,7 @@ public class ApproveAccountScreen implements Screen {
 		Screen nextScreen = null;
 		
 		if(another.toLowerCase().charAt(0) == 'y' ) {
-			nextScreen = new MainMenu();
+			nextScreen = new AdminMenu();
 		}
 
 		return nextScreen;

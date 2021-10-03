@@ -138,12 +138,12 @@ public class AccountDaoImpl implements AccountDao{
 	}
 
 	@Override
-	public void delete(Account t) {
+	public void delete(int accountId) {
 		try(Connection con = bankCon.getDBConnection()){
 			
 			String sql = "delete from accounts where accountid = ?";
 			PreparedStatement cs = con.prepareStatement(sql);
-			cs.setInt(1,t.getAccountID());
+			cs.setInt(1,accountId);
 			cs.execute();
 			
 		} catch (SQLException e) {

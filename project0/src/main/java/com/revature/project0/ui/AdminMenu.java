@@ -53,8 +53,10 @@ public class AdminMenu implements Screen {
 				nextScreen = new TransactionScreen();
 				break;
 			case 3:
+				nextScreen = new ApproveAccountScreen();
 				break;
 			case 4:
+				nextScreen = new CloseAccountScreen();
 				break;
 			case 5:
 				nextScreen = new LoginScreen();

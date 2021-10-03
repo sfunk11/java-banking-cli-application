@@ -87,7 +87,7 @@ public class AdminEditInfo implements Screen {
 
 		Screen nextScreen = null;
 		if(choice2.toLowerCase().charAt(0) == 'y' ) {
-			nextScreen = new MainMenu();
+			nextScreen = new AdminMenu();
 		}
 
 		return nextScreen;
