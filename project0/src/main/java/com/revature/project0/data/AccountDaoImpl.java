@@ -113,6 +113,7 @@ public class AccountDaoImpl implements AccountDao{
 			cs.execute();
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
 			LogDriver.log.error("Database error");
 			
 		}

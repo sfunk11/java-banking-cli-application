@@ -21,7 +21,7 @@ public class TransactionScreen implements Screen {
 	public User render(Scanner conInput, UserService uDao, AccountService aDao, User currentUser) {
 		user = currentUser;
 		System.out.println(ConsoleColors.GREEN + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		System.out.println("@@@@@@@@@@@@@@             Please Selet an Option Below          @@@@@@@@@@@@@@@@@@@");
+		System.out.println("@@@@@@@@@@@@@@            Please Select an Option Below          @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               1. Deposit                          @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               2. Withdrawal                       @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               3. Transfer Between My Accounts     @@@@@@@@@@@@@@@@@@@");
@@ -32,7 +32,7 @@ public class TransactionScreen implements Screen {
 
 		switch (choice) {
 		case 1:
-			if(accountList.size() == 1) {
+			if(accountList.size() >= 1) {
 				System.out.println( "Which account would you like to deposit to? Please enter the number:");
 				accountID = conInput.nextInt();
 				conInput.nextLine();
