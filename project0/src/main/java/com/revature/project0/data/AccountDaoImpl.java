@@ -153,4 +153,28 @@ public class AccountDaoImpl implements AccountDao{
 		
 	}
 
+	@Override
+	public List<Account> getPendingByUser() {
+		List<Account> accountList = new ArrayList<>();
+		 
+		 try(Connection con = bankCon.getDBConnection()){
+			 
+			 String sql = "select * from accounts a inner join users u on a.ownerid = u.userid where a.isApproved = false";
+			 PreparedStatement ps = con.prepareStatement(sql);
+			 ResultSet rs = ps.executeQuery();
+			 
+			 while (rs.next()) {
+				 accountList.add(new Account(rs.getInt(1), rs.getInt(3), 
+					 rs.getDouble(4), rs.getBoolean(5), rs.getString(9)));
+			 }
+			 	 	 
+		 } catch (SQLException e) {
+			 LogDriver.log.error("Database error");
+			
+		}
+
+		return accountList;
+	}
+
+
 }

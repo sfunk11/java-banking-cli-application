@@ -7,18 +7,31 @@ public class Account {
 	private int ownerid;
 	private double balance;
 	private boolean isApproved;
-	
+	private String ownerUsername;
+
+
 	public Account() {
 		
 	}
 
+	
 	public Account(int accountID, int ownerid, double balance, boolean isApproved) {
+		super();
+		this.accountID = accountID;
+		this.ownerid = ownerid;
+		this.balance = balance;
+		this.isApproved = isApproved;
+	}
+
+
+	public Account(int accountID, int ownerid, double balance, boolean isApproved, String ownerUsername) {
 		super();
 		this.accountID = accountID;
 		
 		this.ownerid = ownerid;
 		this.balance = balance;
 		this.isApproved = isApproved;
+		this.ownerUsername = ownerUsername;
 	}
 
 	public Account(int ownerid, double balance) {
@@ -53,6 +66,15 @@ public class Account {
 
 	public int getAccountID() {
 		return accountID;
+	}
+	
+	
+	public String getOwnerUsername() {
+		return ownerUsername;
+	}
+
+	public void setOwnerUsername(String ownerUsername) {
+		this.ownerUsername = ownerUsername;
 	}
 
 }

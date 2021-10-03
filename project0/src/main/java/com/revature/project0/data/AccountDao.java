@@ -8,6 +8,8 @@ public interface AccountDao {
 
 	List<Account> getAll();
 	
+	List<Account> getPendingByUser();
+	
 	List<Account> getByUsername(String username);
 	
 	Account getAccountbyID(int accountid);
