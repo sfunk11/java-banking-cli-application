@@ -1,29 +1,43 @@
 package com.revature.project0.ui;
 
+import java.util.List;
 import java.util.Scanner;
 
+import com.revature.project0.models.User;
 import com.revature.project0.services.AccountService;
 import com.revature.project0.services.UserService;
-import com.revature.project0.models.User;
 
 public class AdminMenu implements Screen {
 
-	private int choice;
+	private int menuChoice;
 	private User user;
-	
+	private User customer;
+	private List<User> customerList;
+	private UserService uServ;
+	private Scanner cs;
 	
 
 	@Override
 	public User render(Scanner conInput, UserService uDao, AccountService aDao, User currentUser) {
-		System.out.println(ConsoleColors.RED + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		
+		user = currentUser;
+		uServ = uDao;
+		cs = conInput;
+		
+		System.out.println(ConsoleColors.YELLOW + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@            Administrator Menu Options:            @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@        1. View/Edit Customer Information          @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@        2. Transactions on Customer Account        @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@        3. Approve New Customer Account            @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@        4. Close Customer Account                  @@@@@@@@@@@@@@@@@@@");
+		System.out.println("@@@@@@@@@@@@@@        5. Logout                                  @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);
-		choice = conInput.nextInt();
-		
+		menuChoice = cs.nextInt();
+		cs.nextLine();
+		if (menuChoice == 1 || menuChoice == 2 || menuChoice == 4) {
+			chooseCustomer();
+			return customer;
+		}
 		return user;
 	}
 	
@@ -31,29 +45,35 @@ public class AdminMenu implements Screen {
 	public Screen determineNext() {
 		
 		Screen nextScreen = new AdminMenu();
-		try {
-		switch (choice) {
+		switch (menuChoice) {
 			case 1:
-				//go to view / edit information window 
+				nextScreen = new AdminEditInfo();
 				break;
 			case 2: 
-				//go to transaction menu (collect cust account info first)
+				nextScreen = new TransactionScreen();
 				break;
 			case 3:
-				//go to account approval
+				nextScreen = new ApproveAccountScreen();
 				break;
 			case 4:
-				//go to account close
+				nextScreen = new CloseAccountScreen();
+				break;
+			case 5:
+				nextScreen = new LoginScreen();
 				break;
 			default:
-				//throw input not valid exception and show menu again;
-		}
-		}catch (Exception e) {
-			nextScreen = new AdminMenu();
+				System.out.println("That is not an available choice. Please choose from the list");
+				nextScreen = new AdminMenu();
 		}
 		return nextScreen;
 	}
-
+	public void chooseCustomer() {
+		System.out.println("Please choose a customer: ");
+		customerList = uServ.listAllCustomers();
+		int custChoice = cs.nextInt();
+		cs.nextLine();
+		customer = customerList.get(custChoice);
+	}
 
 }
 

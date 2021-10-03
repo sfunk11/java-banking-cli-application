@@ -138,12 +138,12 @@ public class AccountDaoImpl implements AccountDao{
 	}
 
 	@Override
-	public void delete(Account t) {
+	public void delete(int accountId) {
 		try(Connection con = bankCon.getDBConnection()){
 			
 			String sql = "delete from accounts where accountid = ?";
 			PreparedStatement cs = con.prepareStatement(sql);
-			cs.setInt(1,t.getAccountID());
+			cs.setInt(1,accountId);
 			cs.execute();
 			
 		} catch (SQLException e) {
@@ -152,5 +152,29 @@ public class AccountDaoImpl implements AccountDao{
 		}
 		
 	}
+
+	@Override
+	public List<Account> getPendingByUser() {
+		List<Account> accountList = new ArrayList<>();
+		 
+		 try(Connection con = bankCon.getDBConnection()){
+			 
+			 String sql = "select * from accounts a inner join users u on a.ownerid = u.userid where a.isApproved = false";
+			 PreparedStatement ps = con.prepareStatement(sql);
+			 ResultSet rs = ps.executeQuery();
+			 
+			 while (rs.next()) {
+				 accountList.add(new Account(rs.getInt(1), rs.getInt(3), 
+					 rs.getDouble(4), rs.getBoolean(5), rs.getString(9)));
+			 }
+			 	 	 
+		 } catch (SQLException e) {
+			 LogDriver.log.error("Database error");
+			
+		}
+
+		return accountList;
+	}
+
 
 }

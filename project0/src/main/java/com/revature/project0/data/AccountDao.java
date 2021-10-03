@@ -8,6 +8,8 @@ public interface AccountDao {
 
 	List<Account> getAll();
 	
+	List<Account> getPendingByUser();
+	
 	List<Account> getByUsername(String username);
 	
 	Account getAccountbyID(int accountid);
@@ -16,5 +18,5 @@ public interface AccountDao {
 	
 	void insert (Account t);
 	
-	void delete (Account t);
+	void delete (int accountId);
 }

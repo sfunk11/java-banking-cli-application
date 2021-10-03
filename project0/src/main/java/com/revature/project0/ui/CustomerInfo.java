@@ -20,7 +20,7 @@ public class CustomerInfo implements Screen {
 		System.out.println("@@@@@@@@@@@@@@               1. Email Address                    @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               2. Password                         @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);
-		displayInfo(currentUser);
+		uDao.displayInfo(currentUser);
 		choice = conInput.nextInt();
 		conInput.nextLine();
 		user = currentUser;
@@ -29,18 +29,18 @@ public class CustomerInfo implements Screen {
 			System.out.println("Please enter the email address you would like to use:");
 			String newEmail = conInput.nextLine();
 			user = uDao.updateEmail(user,  newEmail);
-			displayInfo(user);
 			break;
 		case 2:
 			System.out.println("Please enter your new password: ");
 			String newPassword = conInput.nextLine();
-			user = uDao.updatePassword(user, newPassword);
+			user.setPassword(newPassword);
+			user = uDao.updateUser(user);
 			break;
 		default:
 			System.out.println("Other fields can only be changed by a bank adminstrator.");
 			break;
 		}
-		displayInfo(user);
+		uDao.displayInfo(user);
 		System.out.println("Would you like to do anything else?");
 		choice2 = conInput.nextLine();
 		return user;
@@ -57,12 +57,5 @@ public class CustomerInfo implements Screen {
 		return nextScreen;
 	}
 	
-	public void displayInfo(User user) {
-		System.out.println("First Name: "+ user.getFirstName());
-		System.out.println("Last Name: "+ user.getLastName());
-		System.out.println("Email Address: "+ user.getEmail());
-		System.out.println("Username: "+ user.getUsername());
-		System.out.println("Password: "+ user.getPassword());
-	}
 	
 }

@@ -136,11 +136,10 @@ public void delete(User t) {
 	try(Connection con = bankCon.getDBConnection()){
 		 
 		
-		 String sql = "delete from users where firstname = ? and lastname = ?";
+		 String sql = "delete from users where username = ?";
 		PreparedStatement ps = con.prepareStatement(sql);
 		 
-		 ps.setString(1, t.getFirstName());
-		 ps.setString(2, t.getLastName());
+		 ps.setString(1, t.getUsername());
 		 ps.execute();
 		 
 		 	 	 

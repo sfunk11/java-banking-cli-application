@@ -12,9 +12,10 @@ public class AccountService {
 	
 	private AccountDaoImpl aDao;
 	
-	public AccountService() {
-		
+	public AccountService() {	
+	
 	}
+	
 	
 	public AccountService(AccountDaoImpl aDao) {
 		this.aDao = aDao;
@@ -42,6 +43,7 @@ public class AccountService {
 		
 	}
 	
+	
 	public void withdraw(Account a, double amount) {
 		try {
 			if (a.isApproved()) {
@@ -57,9 +59,8 @@ public class AccountService {
 		catch (Exception e) {
 			LogDriver.log.error("Attempted transaction on unapproved account.");
 		}
-		
-	
 	}
+	
 	
 	public void transfer(Account from, Account to, double amount) {
 		try {
@@ -76,64 +77,108 @@ public class AccountService {
 		}
 		catch (Exception e) {
 			LogDriver.log.error("Attempted transaction on unapproved account.");
-		}
-		
+		}	
 	
 	}
+	
 	
 	public Account displaySingleAccount(int accountID) {
-	try {	
-		Account account = aDao.getAccountbyID(accountID);
-		
-		if (Integer.valueOf(account.getAccountID())==null) {
-			throw new RuntimeException("There is no account with that account number.");
-		}
-		System.out.println("Account Number: " + account.getAccountID());
-		System.out.println("Account Balance: " + account.getBalance());
-		if (account.isApproved()) {
-			System.out.println("Status: Active");
-		}else {
-			System.out.println("Status: Pending");
-		}
-		return account;
-	} catch(Exception e) {
-		LogDriver.log.error("No accounts with number: " + accountID);
-	}
-	return null;
-	}
-	
-	public List<Account> displayListAccountsByOwner(String username) {
-	try {	
-		List<Account> accountList = aDao.getByUsername(username);
-		
-		if (accountList.get(0)==null) {
-			throw new RuntimeException("There are no accounts for that user.");
-		}
-		for(Account a : accountList) {
+		try {	
+			Account account = aDao.getAccountbyID(accountID);
 			
-			System.out.println("----------------------------");
-			System.out.println("Account Number: " + a.getAccountID());
-			System.out.println("Account Balance: " + a.getBalance());
-			if (a.isApproved()) {
+			if (Integer.valueOf(account.getAccountID())==null) {
+				throw new RuntimeException("There is no account with that account number.");
+			}
+			
+			System.out.println("Account Number: " + account.getAccountID());
+			System.out.println("Account Balance: " + account.getBalance());
+			
+			if (account.isApproved()) {
 				System.out.println("Status: Active");
 			}else {
 				System.out.println("Status: Pending");
 			}
-			System.out.println("----------------------------");
+			
+			return account;
+			
+		} catch(Exception e) {
+			LogDriver.log.error("No accounts with number: " + accountID);
 		}
-		return accountList;
-	} catch(Exception e) {
-		LogDriver.log.error("No accounts for user: " + username);
-	}
-	return null;
+		return null;
 	}
 	
+	
+	public List<Account> displayListAccountsByOwner(String username) {
+		try {	
+			List<Account> accountList = aDao.getByUsername(username);
+			
+			if (accountList.get(0)==null) {
+				throw new RuntimeException("There are no accounts for that user.");
+			}
+			for(Account a : accountList) {
+				
+				System.out.println("----------------------------");
+				System.out.println("Account Number: " + a.getAccountID());
+				System.out.println("Account Balance: " + a.getBalance());
+				if (a.isApproved()) {
+					System.out.println("Status: Active");
+				}else {
+					System.out.println("Status: Pending");
+				}
+				System.out.println("----------------------------");
+			}
+			return accountList;
+		} catch(Exception e) {
+			LogDriver.log.error("No accounts for user: " + username);
+		}
+		return null;
+	}
+	
+	
 	public List<Account> createIndividualAccount(Account account, User user) {
+		
 		account.setOwnerid(user.getUserid());
 		aDao.insert(account);
 		List<Account> accountList = displayListAccountsByOwner(user.getUsername());
 		return accountList;
 	}
+	
+	
+	public List<Account> listPendingAccounts(){
+		
+		try {
+			List<Account> accountList = aDao.getPendingByUser();
+			if (accountList.get(0)==null) {
+				throw new RuntimeException("There are no pending accounts at this time.");
+			}
+			for(Account a : accountList) {
+			
+				System.out.println(a.getAccountID() + "   " + a.getOwnerUsername() + "  "+ a.getBalance());
+			}
+			return accountList;
+			
+		}catch(RuntimeException e) {
+			LogDriver.log.error(e);
+		}
+		
+		return null;
+	}
+	
+	public void approveAccount(int accountId) {
+		
+		Account account = aDao.getAccountbyID(accountId);
+		account.setApproved(true);
+		aDao.update(account);
+		
+	}
+	
+	
+	public void closeAccount(int accountId) {
+		
+		aDao.delete(accountId);
+		
+	}
+	
 	
 	
 }
