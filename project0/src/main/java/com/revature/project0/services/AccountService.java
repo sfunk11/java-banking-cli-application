@@ -5,6 +5,7 @@ import java.util.List;
 import com.revature.project0.data.AccountDaoImpl;
 import com.revature.project0.main.LogDriver;
 import com.revature.project0.models.Account;
+import com.revature.project0.models.User;
 
 
 public class AccountService {
@@ -89,6 +90,11 @@ public class AccountService {
 		}
 		System.out.println("Account Number: " + account.getAccountID());
 		System.out.println("Account Balance: " + account.getBalance());
+		if (account.isApproved()) {
+			System.out.println("Status: Active");
+		}else {
+			System.out.println("Status: Pending");
+		}
 		return account;
 	} catch(Exception e) {
 		LogDriver.log.error("No accounts with number: " + accountID);
@@ -108,12 +114,26 @@ public class AccountService {
 			System.out.println("----------------------------");
 			System.out.println("Account Number: " + a.getAccountID());
 			System.out.println("Account Balance: " + a.getBalance());
+			if (a.isApproved()) {
+				System.out.println("Status: Active");
+			}else {
+				System.out.println("Status: Pending");
+			}
 			System.out.println("----------------------------");
-		return accountList;
 		}
+		return accountList;
 	} catch(Exception e) {
 		LogDriver.log.error("No accounts for user: " + username);
 	}
 	return null;
 	}
+	
+	public List<Account> createIndividualAccount(Account account, User user) {
+		account.setOwnerid(user.getUserid());
+		aDao.insert(account);
+		List<Account> accountList = displayListAccountsByOwner(user.getUsername());
+		return accountList;
+	}
+	
+	
 }

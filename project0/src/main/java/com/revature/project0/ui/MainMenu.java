@@ -19,6 +19,7 @@ public class MainMenu implements Screen {
 		System.out.println("@@@@@@@@@@@@@@               1. Change my personal info          @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               2. Go to My Open Accounts           @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               3. Open a New Account               @@@@@@@@@@@@@@@@@@@");
+		System.out.println("@@@@@@@@@@@@@@               4. Log Out                          @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);
 		choice = conInput.nextInt();
 		conInput.nextLine();
@@ -42,6 +43,9 @@ public class MainMenu implements Screen {
 					break;
 				case 3:
 					next = new AccountCreation();
+					break;
+				case 4:
+					next = new LoginScreen();
 					break;
 				default:
 					System.out.println("That is not an available option. Please choose from the menu.");
