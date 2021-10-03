@@ -135,5 +135,9 @@ public class AccountService {
 		return accountList;
 	}
 	
-	
+	public void approveAccount(Account account) {
+		account.setApproved(true);
+		aDao.update(account);
+		
+	}
 }

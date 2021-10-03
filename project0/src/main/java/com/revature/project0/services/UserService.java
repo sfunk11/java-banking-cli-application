@@ -1,5 +1,6 @@
 package com.revature.project0.services;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -91,5 +92,11 @@ public class UserService {
 		return user;
 	}
 	
-	
+	public List<User> listAllCustomers() {
+		List<User> userList = uDao.getAll();
+		for (User u : userList) {
+			System.out.println(u.getUserid() + " " + u.getFirstName() + " " + u.getLastName());
+		}
+		return userList;
+	}
 }
