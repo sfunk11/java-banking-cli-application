@@ -61,9 +61,6 @@ public class UserService {
 		return null;
 	}
 	
-	public void displayUserInfo(User user) {
-		
-	}
 	
 	public User updateEmail(User user, String email) {
 		try {
@@ -85,11 +82,22 @@ public class UserService {
 		return user;
 	}
 	
-	public User updatePassword(User user, String password) {
+	public void displayInfo(User user) {
+		System.out.println("First Name: "+ user.getFirstName());
+		System.out.println("Last Name: "+ user.getLastName());
+		System.out.println("Email Address: "+ user.getEmail());
+		System.out.println("Username: "+ user.getUsername());
+		System.out.println("Password: "+ user.getPassword());
+	}
 	
-		user.setPassword(password);
+	public User updateUser(User user) {
+	
 		uDao.update(user);
 		return user;
+	}
+	
+	public void removeUser(User user) {
+		
 	}
 	
 	public List<User> listAllCustomers() {
