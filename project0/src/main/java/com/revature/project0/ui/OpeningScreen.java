@@ -3,6 +3,7 @@ package com.revature.project0.ui;
 import java.util.Scanner;
 
 import com.revature.project0.main.LogDriver;
+import com.revature.project0.models.User;
 import com.revature.project0.services.AccountService;
 import com.revature.project0.services.UserService;
 
@@ -11,7 +12,7 @@ public class OpeningScreen implements Screen {
 	static int inputChoice;
 	
 	@Override
-	public void render(Scanner conInput, UserService uDao, AccountService aDao) {
+	public User render(Scanner conInput, UserService uDao, AccountService aDao, User currentUser) {
 		System.out.println(ConsoleColors.BLUE_BRIGHT + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@                 WELCOME TO SAM'S BANK             @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@                                                   @@@@@@@@@@@@@@@@@@@");
@@ -21,6 +22,7 @@ public class OpeningScreen implements Screen {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);
 		inputChoice = conInput.nextInt();
 		conInput.nextLine();
+		return currentUser;
 	}
 	
 	@Override

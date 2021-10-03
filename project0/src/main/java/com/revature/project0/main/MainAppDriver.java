@@ -25,17 +25,19 @@ public class MainAppDriver {
 		UserService uServ = new UserService(uDao);
 		AccountDaoImpl aDao = new AccountDaoImpl(bankCon);
 		AccountService aServ = new AccountService(aDao);
+		User currentUser = null;
 		
 		
 		Screen presentScreen = new OpeningScreen();
 		
 		
 		while(presentScreen != null) {
-		presentScreen.render(conInput, uServ, aServ);
-		presentScreen = presentScreen.determineNext();
+		
+			currentUser = presentScreen.render(conInput, uServ, aServ, currentUser);
+			presentScreen = presentScreen.determineNext();
 		}
 		
-		System.out.println(ConsoleColors.BLUE + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		System.out.println(ConsoleColors.BLUE_BRIGHT + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@          Thank you for using Sam's Bank!          @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@                  Have a Great Day!                @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);

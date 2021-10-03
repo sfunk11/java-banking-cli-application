@@ -5,6 +5,7 @@ import java.util.List;
 import com.revature.project0.data.AccountDaoImpl;
 import com.revature.project0.main.LogDriver;
 import com.revature.project0.models.Account;
+import com.revature.project0.models.User;
 
 
 public class AccountService {
@@ -60,7 +61,27 @@ public class AccountService {
 	
 	}
 	
-	public void displaySingleAccount(int accountID) {
+	public void transfer(Account from, Account to, double amount) {
+		try {
+			if (from.isApproved() && to.isApproved()) {
+				double newBalance = from.getBalance() - amount;
+				from.setBalance(newBalance);
+				aDao.update(from);
+				newBalance = to.getBalance()+ amount;
+				to.setBalance(newBalance);
+				aDao.update(to);
+			} else {
+				throw new RuntimeException("One of these accounts has not yet been approved by the bank.  Please try again later.");
+			}
+		}
+		catch (Exception e) {
+			LogDriver.log.error("Attempted transaction on unapproved account.");
+		}
+		
+	
+	}
+	
+	public Account displaySingleAccount(int accountID) {
 	try {	
 		Account account = aDao.getAccountbyID(accountID);
 		
@@ -69,12 +90,19 @@ public class AccountService {
 		}
 		System.out.println("Account Number: " + account.getAccountID());
 		System.out.println("Account Balance: " + account.getBalance());
+		if (account.isApproved()) {
+			System.out.println("Status: Active");
+		}else {
+			System.out.println("Status: Pending");
+		}
+		return account;
 	} catch(Exception e) {
 		LogDriver.log.error("No accounts with number: " + accountID);
 	}
+	return null;
 	}
 	
-	public void displayListAccountsByOwner(String username) {
+	public List<Account> displayListAccountsByOwner(String username) {
 	try {	
 		List<Account> accountList = aDao.getByUsername(username);
 		
@@ -86,10 +114,26 @@ public class AccountService {
 			System.out.println("----------------------------");
 			System.out.println("Account Number: " + a.getAccountID());
 			System.out.println("Account Balance: " + a.getBalance());
+			if (a.isApproved()) {
+				System.out.println("Status: Active");
+			}else {
+				System.out.println("Status: Pending");
+			}
 			System.out.println("----------------------------");
 		}
+		return accountList;
 	} catch(Exception e) {
 		LogDriver.log.error("No accounts for user: " + username);
 	}
+	return null;
 	}
+	
+	public List<Account> createIndividualAccount(Account account, User user) {
+		account.setOwnerid(user.getUserid());
+		aDao.insert(account);
+		List<Account> accountList = displayListAccountsByOwner(user.getUsername());
+		return accountList;
+	}
+	
+	
 }

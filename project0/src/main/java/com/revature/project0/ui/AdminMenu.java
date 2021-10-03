@@ -4,13 +4,17 @@ import java.util.Scanner;
 
 import com.revature.project0.services.AccountService;
 import com.revature.project0.services.UserService;
+import com.revature.project0.models.User;
 
 public class AdminMenu implements Screen {
 
-	static int inputChoice;
+	private int choice;
+	private User user;
+	
+	
 
 	@Override
-	public void render(Scanner conInput, UserService uDao, AccountService aDao) {
+	public User render(Scanner conInput, UserService uDao, AccountService aDao, User currentUser) {
 		System.out.println(ConsoleColors.RED + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@            Administrator Menu Options:            @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@        1. View/Edit Customer Information          @@@@@@@@@@@@@@@@@@@");
@@ -18,7 +22,9 @@ public class AdminMenu implements Screen {
 		System.out.println("@@@@@@@@@@@@@@        3. Approve New Customer Account            @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@        4. Close Customer Account                  @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);
-		inputChoice = conInput.nextInt();
+		choice = conInput.nextInt();
+		
+		return user;
 	}
 	
 	@Override
@@ -26,7 +32,7 @@ public class AdminMenu implements Screen {
 		
 		Screen nextScreen = new AdminMenu();
 		try {
-		switch (inputChoice) {
+		switch (choice) {
 			case 1:
 				//go to view / edit information window 
 				break;
