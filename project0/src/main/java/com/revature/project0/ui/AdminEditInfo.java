@@ -25,6 +25,7 @@ public class AdminEditInfo implements Screen {
 		System.out.println("@@@@@@@@@@@@@@               6. Mark as Employee                 @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               7. Mark as Admin                    @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               8. Delete User                      @@@@@@@@@@@@@@@@@@@");
+		System.out.println("@@@@@@@@@@@@@@               9. Return to Admin Menu             @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);
 		uDao.displayInfo(currentUser);
 		choice = conInput.nextInt();
@@ -71,7 +72,9 @@ public class AdminEditInfo implements Screen {
 		case 8:
 			uDao.removeUser(user);
 			user = null;
-			break;	
+			break;
+		case 9: 
+			break;
 		default:
 			System.out.println("Other fields can only be changed by a bank adminstrator.");
 			break;
@@ -86,6 +89,10 @@ public class AdminEditInfo implements Screen {
 	public Screen determineNext() {
 
 		Screen nextScreen = null;
+		if(choice == 9) {
+			nextScreen = new AdminMenu();
+			return nextScreen;
+		}
 		if(choice2.toLowerCase().charAt(0) == 'y' ) {
 			nextScreen = new AdminMenu();
 		}

@@ -33,8 +33,8 @@ public class AccountCreation implements Screen {
 		conInput.nextLine();
 		Account newAccount = new Account();
 		newAccount.setBalance(newBalance);
-		accountList = aDao.createIndividualAccount(null, user);
-		System.out.println(ConsoleColors.RED_BRIGHT + "All new accounts are pending until approved by a bank employee." + ConsoleColors.RESET);
+		accountList = aDao.createIndividualAccount(newAccount, user);
+		System.out.println(ConsoleColors.RED_BRIGHT + "All new accounts are pending until approved by a bank administrator." + ConsoleColors.RESET);
 		System.out.println("Would you like to do anything else?");
 		choice = conInput.nextLine();
 		return user;
