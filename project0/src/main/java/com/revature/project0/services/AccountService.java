@@ -181,6 +181,7 @@ public class AccountService {
 		Account account = aDao.getAccountbyID(accountId);
 		account.setApproved(true);
 		aDao.update(account);
+		System.out.println("Great! Account "+ accountId + " is approved.");
 		
 	}
 	

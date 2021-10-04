@@ -23,23 +23,24 @@ public class EmployeeMenu implements Screen {
 	
 		System.out.println(ConsoleColors.CYAN + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@                Employee Menu Options:             @@@@@@@@@@@@@@@@@@@");
-		System.out.println("@@@@@@@@@@@@@@        1. View Customer Account Information       @@@@@@@@@@@@@@@@@@@");
-		System.out.println("@@@@@@@@@@@@@@        2. View Customer Personal Information      @@@@@@@@@@@@@@@@@@@");
+		System.out.println("@@@@@@@@@@@@@@        1. View Customer Personal Information      @@@@@@@@@@@@@@@@@@@");
+		System.out.println("@@@@@@@@@@@@@@        2. View Customer Account Information       @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@        3. Approve New Account                     @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@        4. Logout                                  @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);
 		choice  = conInput.nextInt();
 		conInput.nextLine();
+		if ( choice == 1 || choice == 2) {
+			customer = chooseCustomer();
+		}
 		
 		switch (choice) {
 		case 1:
-			chooseCustomer();
 			uServ.displayInfo(customer);
 			System.out.println("Would you like to do anything else?");
 			another = conInput.nextLine();
 			break;
 		case 2:
-			chooseCustomer();
 			aDao.displayListAccountsByOwner(customer.getUsername());
 			System.out.println("Would you like to do anything else?");
 			another = conInput.nextLine();
@@ -73,7 +74,7 @@ public class EmployeeMenu implements Screen {
 		return nextScreen;
 	}
 	
-	public void chooseCustomer() {
+	public User chooseCustomer() {
 		System.out.println("Please choose a customer: ");
 		customerList = uServ.listAllCustomers();
 		int custChoice = cs.nextInt();
@@ -85,6 +86,7 @@ public class EmployeeMenu implements Screen {
 			}
 		}
 		customer = customerList.get(custChoice);
+		return customer;
 	}
 	
 
