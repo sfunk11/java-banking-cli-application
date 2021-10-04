@@ -39,7 +39,7 @@ public class AccountService {
 		}
 		catch (Exception e) {
 			
-			LogDriver.log.error("Attempted transaction on unapproved account.");
+			LogDriver.log.error(e);
 		}
 		
 	}
@@ -82,6 +82,7 @@ public class AccountService {
 				aDao.update(to);
 				System.out.println("Thank you for your transfer. Here are your account balances:" );
 				displayListAccountsByOwner(user.getUsername());
+				LogDriver.log.info("Transfer of $" + amount + " from account "+ from.getAccountID()+ " to account " + to.getAccountID());
 			} else {
 				throw new RuntimeException("One of these accounts has not yet been approved by the bank.  Please try again later.");
 			}
@@ -113,7 +114,7 @@ public class AccountService {
 			return account;
 			
 		} catch(Exception e) {
-			LogDriver.log.error("No accounts with number: " + accountID);
+			LogDriver.log.error(e);
 		}
 		return null;
 	}
@@ -140,7 +141,7 @@ public class AccountService {
 			}
 			return accountList;
 		} catch(Exception e) {
-			LogDriver.log.error("No accounts for user: " + username);
+			LogDriver.log.error(e);
 			return null;
 		}
 
@@ -181,8 +182,7 @@ public class AccountService {
 		Account account = aDao.getAccountbyID(accountId);
 		account.setApproved(true);
 		aDao.update(account);
-		System.out.println("Great! Account "+ accountId + " is approved.");
-		
+		LogDriver.log.info("Account #" + accountId + " approved.");
 	}
 	
 	
