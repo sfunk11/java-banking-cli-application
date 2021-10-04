@@ -1,9 +1,9 @@
 package com.revature.project0.eval;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -29,6 +29,7 @@ public class TransactionTest {
 	private AccountService aServ;
 	private User testuser = new User(1, "Mike", "Thompson", "mthompson", "password", false, false, "mthompson@rmail.com");
 	private Account testAccount = new Account(5, 1, 250.00, true, "mthompson");
+	private Account testA2 = new Account(6,1,500.00, true, "mthompson");
 	
 
 	
@@ -50,14 +51,26 @@ public class TransactionTest {
 	
 	@Test
 	public void LoginTest() {
-		assertEquals(testuser,  uServ.logIn("mthompson", "password"));
+		User user =  uServ.logIn("mthompson", "password");
+		Assert.assertNotNull(user);;
 	}
 	
 	@Test
 	public void LoginFailTest() {
+		User user = uServ.logIn("mthompson", "something");
 		
-		assertThrows(IllegalArgumentException.class, () -> uServ.logIn("mthompson", "something"));
+		Assert.assertNull(user);
+		
+	}
+	
+	@Test
+	public void OverdraftTest() {
+		double amount = 300;
+		aServ.withdraw(testAccount, amount);
+		assertEquals(250.0, testAccount.getBalance());
+		
 	}
 }
+
 
 
