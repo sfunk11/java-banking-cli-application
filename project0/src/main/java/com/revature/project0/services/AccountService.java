@@ -21,6 +21,7 @@ public class AccountService {
 		this.aDao = aDao;
 	}
 	
+	
 
 	public void deposit(Account a, double amount) {
 		try {
@@ -49,6 +50,9 @@ public class AccountService {
 			
 			if (a.isApproved()) {
 				double newBalance = a.getBalance() - amount;
+				if (newBalance < 0) {
+					throw new RuntimeException("There is not enough money in your account for this transaction.");
+				}
 				a.setBalance(newBalance);
 				aDao.update(a);
 				System.out.println("Thank you for your withdrawal. Your new balance is $"+ a.getBalance() + ".");
@@ -58,26 +62,32 @@ public class AccountService {
 			}
 		}
 		catch (Exception e) {
-			LogDriver.log.error("Attempted transaction on unapproved account.");
+			LogDriver.log.error(e);
+			return;
 		}
 	}
 	
 	
-	public void transfer(Account from, Account to, double amount) {
+	public void transfer(Account from, Account to, double amount, User user) {
 		try {
 			if (from.isApproved() && to.isApproved()) {
 				double newBalance = from.getBalance() - amount;
+				if (newBalance < 0) {
+					throw new RuntimeException("There is not enough money in your account for this transaction.");
+				}
 				from.setBalance(newBalance);
 				aDao.update(from);
 				newBalance = to.getBalance()+ amount;
 				to.setBalance(newBalance);
 				aDao.update(to);
+				System.out.println("Thank you for your transfer. Here are your account balances:" );
+				displayListAccountsByOwner(user.getUsername());
 			} else {
 				throw new RuntimeException("One of these accounts has not yet been approved by the bank.  Please try again later.");
 			}
 		}
 		catch (Exception e) {
-			LogDriver.log.error("Attempted transaction on unapproved account.");
+			LogDriver.log.error(e);
 		}	
 	
 	}
@@ -171,6 +181,7 @@ public class AccountService {
 		Account account = aDao.getAccountbyID(accountId);
 		account.setApproved(true);
 		aDao.update(account);
+		System.out.println("Great! Account "+ accountId + " is approved.");
 		
 	}
 	
