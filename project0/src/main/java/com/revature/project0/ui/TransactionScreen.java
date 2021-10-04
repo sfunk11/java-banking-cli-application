@@ -12,7 +12,7 @@ public class TransactionScreen implements Screen {
 	private User user;
 	private int choice;
 	private String choice2;
-	private String open;
+	private String open = "no";
 	private int accountID;
 	private List<Account> accountList;
 	private Account currentAccount;
@@ -43,11 +43,9 @@ public class TransactionScreen implements Screen {
 				System.out.println( "Which account would you like to deposit to? Please enter the number:");
 				accountID = conInput.nextInt();
 				conInput.nextLine();
-				for (int i = 0; i < accountList.size(); i++) {
-					if (accountList.get(i).getAccountID() == accountID) {
-						currentAccount = accountList.get(i);
-						break;
-					}
+				currentAccount = validateAccountNumber(accountList, accountID, conInput);
+				if (currentAccount == null) {
+					break;
 				}
 			} else {
 				currentAccount = accountList.get(0);
@@ -55,6 +53,10 @@ public class TransactionScreen implements Screen {
 			System.out.println( "How much would you like to deposit? (ie 500.00):");
 			amount = conInput.nextDouble();
 			conInput.nextLine();
+			validateAmount(amount, conInput);
+			if (amount < 0.01) {
+				break;
+			}
 			aDao.deposit(currentAccount, amount);
 			break;
 		case 2: 
@@ -63,11 +65,9 @@ public class TransactionScreen implements Screen {
 				System.out.println( "Which account would you like to withdraw from? Please enter the number:");
 				accountID = conInput.nextInt();
 				conInput.nextLine();
-				for (int i = 0; i < accountList.size(); i++) {
-					if (accountList.get(i).getAccountID() == accountID) {
-						currentAccount = accountList.get(i);
-						break;
-					}
+				currentAccount = validateAccountNumber(accountList, accountID, conInput);
+				if (currentAccount == null) {
+					break;
 				}
 			} else {
 				currentAccount = accountList.get(0);
@@ -75,6 +75,10 @@ public class TransactionScreen implements Screen {
 			System.out.println( "How much would you like to withdraw? (ie 500.00):");
 			amount = conInput.nextDouble();
 			conInput.nextLine();
+			amount = validateAmount(amount, conInput);
+			if (amount < 0.01) {
+				break;
+			}
 			aDao.withdraw(currentAccount, amount);
 			break;
 		case 3:
@@ -84,27 +88,26 @@ public class TransactionScreen implements Screen {
 			conInput.nextLine();
 			Account from = null;
 			Account to = null;
-			for (int i = 0; i < accountList.size(); i++) {
-				if (accountList.get(i).getAccountID() == accountID) {
-					from = accountList.get(i);
-					break;
-				}
+			
+			from = validateAccountNumber(accountList, accountID, conInput);
+			if (from == null) {
+				break;
 			}
 			System.out.println("Which account would you like to transfer to?");
 			accountID = conInput.nextInt();
 			conInput.nextLine();
-			for (int i = 0; i < accountList.size(); i++) {
-				if (accountList.get(i).getAccountID() == accountID) {
-					to = accountList.get(i);
-					break;
-				}
+			to = validateAccountNumber(accountList, accountID, conInput);
+			if (to == null) {
+				break;
 			}
 			System.out.println( "How much would you like to transfer? (ie 500.00):");
 			double amount = conInput.nextDouble();
 			conInput.nextLine();
-			aDao.transfer(from, to, amount);
-			System.out.println("Thank you for your transfer. Here are your account balances:" );
-			aDao.displayListAccountsByOwner(user.getUsername());
+			validateAmount(amount, conInput);
+			if (amount < 0.01) {
+				break;
+			}
+			aDao.transfer(from, to, amount, user);
 			break;
 		default:
 			System.out.println("That is not an available option. Please choose from the list.");
@@ -135,10 +138,37 @@ public class TransactionScreen implements Screen {
 	}
 	
 	
-		
+		public double validateAmount(double amount, Scanner conInput) {
+			int tries = 0;
 			
-	
-		
+			while (amount < 0.01 && tries <2) {
+				System.out.println("Please enter a positive number only. Let's try again:");
+				amount = conInput.nextDouble();
+				conInput.nextLine();
+				tries ++;
+			}
+			return amount;
+		}
+			
+		public Account validateAccountNumber(List<Account> a, int acctNum, Scanner conInput) {
+			int tries = 0;
+			Account b = null;
+			
+			while (b == null && tries < 2) {
+				for (int i = 0; i < a.size(); i++) {
+					if (a.get(i).getAccountID() == acctNum) {
+						b = accountList.get(i);
+					}
+				}
+				if (b == null) {
+					System.out.println("That is not one of your account numbers.  Please try again");
+					acctNum = conInput.nextInt();
+					conInput.nextLine();
+				}
+				tries ++;
+			}
+		 return b;
+		}
 }
 	
 	

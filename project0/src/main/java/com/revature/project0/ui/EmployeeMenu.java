@@ -78,6 +78,12 @@ public class EmployeeMenu implements Screen {
 		customerList = uServ.listAllCustomers();
 		int custChoice = cs.nextInt();
 		cs.nextLine();
+		for (int i = 0; i < customerList.size(); i++) {
+			if (customerList.get(i).getUserid() == custChoice) {
+				custChoice = i;
+				break;
+			}
+		}
 		customer = customerList.get(custChoice);
 	}
 	
