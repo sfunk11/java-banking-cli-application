@@ -189,6 +189,7 @@ public class AccountService {
 	public void closeAccount(int accountId) {
 		
 		aDao.delete(accountId);
+		LogDriver.log.info("Account #" + accountId + " has been deleted");
 		
 	}
 	
