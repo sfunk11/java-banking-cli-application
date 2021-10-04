@@ -10,6 +10,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.revature.project0.main.LogDriver;
 import com.revature.project0.models.User;
 
 public class UserDaoImpl implements UserDao {
@@ -46,7 +47,7 @@ public List<User> getAll() {
 		 	 	 
 	 } catch (SQLException e) {
 		
-		e.printStackTrace();
+		 LogDriver.log.error(e);
 	}
 
 	return userList;
@@ -76,7 +77,7 @@ public User getByUsername(String username) {
 		 	 	 
 	 } catch (SQLException e) {
 		
-		e.printStackTrace();
+		 LogDriver.log.error(e);
 	}
 	
 	return null;
@@ -103,7 +104,7 @@ public void update(User t) {
 		 	 	 
 	 } catch (SQLException e) {
 		
-		e.printStackTrace();
+		 LogDriver.log.error(e);
 	}
 	
 }
@@ -126,7 +127,7 @@ public void insert(User t) {
 		 	 	 
 	 } catch (SQLException e) {
 		
-		e.printStackTrace();
+		 LogDriver.log.error(e);
 	}
 	
 }
@@ -145,7 +146,7 @@ public void delete(User t) {
 		 	 	 
 	 } catch (SQLException e) {
 		
-		e.printStackTrace();
+		 LogDriver.log.error(e);
 	}
 	
 	

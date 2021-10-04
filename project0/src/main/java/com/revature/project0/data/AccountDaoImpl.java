@@ -43,7 +43,7 @@ public class AccountDaoImpl implements AccountDao{
 			 }
 			 	 	 
 		 } catch (SQLException e) {
-			 LogDriver.log.error("Database error");
+			 LogDriver.log.error(e);
 			
 		}
 
@@ -67,7 +67,7 @@ public class AccountDaoImpl implements AccountDao{
 			 }
 			 	 	 
 		 } catch (SQLException e) {
-			 LogDriver.log.error("Database error");
+			 LogDriver.log.error(e);
 			
 		}
 
@@ -93,7 +93,7 @@ public class AccountDaoImpl implements AccountDao{
 			 }
 			 	 	 
 		 } catch (SQLException e) {
-			 LogDriver.log.error("Database error");
+			 LogDriver.log.error(e);
 		
 		}
 		return account;
@@ -114,7 +114,7 @@ public class AccountDaoImpl implements AccountDao{
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			LogDriver.log.error("Database error");
+			LogDriver.log.error(e);
 			
 		}
 		
@@ -132,7 +132,7 @@ public class AccountDaoImpl implements AccountDao{
 			cs.execute();
 			
 		} catch (SQLException e) {
-			LogDriver.log.error("Database error");
+			LogDriver.log.error(e);
 		
 		}
 		
@@ -148,7 +148,7 @@ public class AccountDaoImpl implements AccountDao{
 			cs.execute();
 			
 		} catch (SQLException e) {
-			LogDriver.log.error("Database error");
+			LogDriver.log.error(e);
 			
 		}
 		
@@ -170,7 +170,7 @@ public class AccountDaoImpl implements AccountDao{
 			 }
 			 	 	 
 		 } catch (SQLException e) {
-			 LogDriver.log.error("Database error");
+			 LogDriver.log.error(e);
 			
 		}
 

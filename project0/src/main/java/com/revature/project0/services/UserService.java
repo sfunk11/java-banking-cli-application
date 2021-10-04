@@ -31,6 +31,7 @@ public class UserService {
 			User user = uDao.getByUsername(username);
 			
 			if (user.getPassword().equals(password.trim())) {
+				LogDriver.log.info(username + " logged in");
 				return user;
 			} else {
 				throw new IllegalArgumentException("That username and password do not match any users.");
@@ -51,6 +52,7 @@ public class UserService {
 			uDao.insert(user);
 			User newUser = uDao.getByUsername(user.getUsername());
 			if (newUser.getFirstName() != null) {
+				LogDriver.log.info(newUser.getUsername() + " has been added");
 				return newUser;
 			} else {
 				throw new RuntimeException("Something went wrong.");
@@ -70,6 +72,7 @@ public class UserService {
 			if (matcher.matches()) {
 				user.setEmail(email);
 				uDao.update(user);
+				LogDriver.log.info(user.getUsername() + " has been updated");
 			} else {
 				throw new RuntimeException("That is not a properly formatted email.");
 			}
@@ -93,11 +96,13 @@ public class UserService {
 	public User updateUser(User user) {
 	
 		uDao.update(user);
+		LogDriver.log.info(user.getUsername() + " has been updated");
 		return user;
 	}
 	
 	public void removeUser(User user) {
-			uDao.delete(user);	
+		LogDriver.log.info(user.getUsername() + " has been deleted");	
+		uDao.delete(user);	
 	
 	}
 	
