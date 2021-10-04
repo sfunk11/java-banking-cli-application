@@ -12,6 +12,7 @@ public class TransactionScreen implements Screen {
 	private User user;
 	private int choice;
 	private String choice2;
+	private String open;
 	private int accountID;
 	private List<Account> accountList;
 	private Account currentAccount;
@@ -20,7 +21,7 @@ public class TransactionScreen implements Screen {
 	@Override
 	public User render(Scanner conInput, UserService uDao, AccountService aDao, User currentUser) {
 		user = currentUser;
-		System.out.println(ConsoleColors.GREEN + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		System.out.println(ConsoleColors.PURPLE + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@            Please Select an Option Below          @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               1. Deposit                          @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               2. Withdrawal                       @@@@@@@@@@@@@@@@@@@");
@@ -29,9 +30,15 @@ public class TransactionScreen implements Screen {
 		choice = conInput.nextInt();
 		conInput.nextLine();
 		accountList = aDao.displayListAccountsByOwner(currentUser.getUsername());
-
+		if (accountList == null) {
+			System.out.println("You don't currently have any accounts. Would you like to open a new one?");
+			open = conInput.nextLine();
+			
+		}else {
+		
 		switch (choice) {
 		case 1:
+			
 			if(accountList.size() >= 1) {
 				System.out.println( "Which account would you like to deposit to? Please enter the number:");
 				accountID = conInput.nextInt();
@@ -51,7 +58,8 @@ public class TransactionScreen implements Screen {
 			aDao.deposit(currentAccount, amount);
 			break;
 		case 2: 
-			if(accountList.size() == 1) {
+			
+			if(accountList.size() >= 1) {
 				System.out.println( "Which account would you like to withdraw from? Please enter the number:");
 				accountID = conInput.nextInt();
 				conInput.nextLine();
@@ -105,7 +113,9 @@ public class TransactionScreen implements Screen {
 		
 		System.out.println("Would you like to do anything else?");
 		choice2 = conInput.nextLine();
+		}
 		return user;
+	
 	}
 
 	@Override
@@ -113,6 +123,10 @@ public class TransactionScreen implements Screen {
 
 		Screen nextScreen = null;
 		
+		if(open.toLowerCase().charAt(0) == 'y' ) {
+			nextScreen = new AccountCreation();
+			return nextScreen;
+		}
 		if(choice2.toLowerCase().charAt(0) == 'y' ) {
 			nextScreen = new MainMenu();
 		}

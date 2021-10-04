@@ -46,6 +46,7 @@ public class AccountService {
 	
 	public void withdraw(Account a, double amount) {
 		try {
+			
 			if (a.isApproved()) {
 				double newBalance = a.getBalance() - amount;
 				a.setBalance(newBalance);
@@ -130,8 +131,9 @@ public class AccountService {
 			return accountList;
 		} catch(Exception e) {
 			LogDriver.log.error("No accounts for user: " + username);
+			return null;
 		}
-		return null;
+
 	}
 	
 	
