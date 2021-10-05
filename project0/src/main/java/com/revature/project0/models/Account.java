@@ -1,13 +1,14 @@
 package com.revature.project0.models;
 
+import java.util.List;
 
 public class Account {
 
 	private int accountID;
-	private int ownerid;
 	private double balance;
 	private boolean isApproved;
-	private String ownerUsername;
+	private List<String> ownerUsernames;
+	private List<Integer> ownerIds;
 
 
 	public Account() {
@@ -15,37 +16,28 @@ public class Account {
 	}
 
 	
-	public Account(int accountID, int ownerid, double balance, boolean isApproved) {
+	public Account(int accountID, double balance, boolean isApproved, List<Integer> ownerIds) {
 		super();
 		this.accountID = accountID;
-		this.ownerid = ownerid;
 		this.balance = balance;
 		this.isApproved = isApproved;
+		this.ownerIds = ownerIds;
 	}
 
 
-	public Account(int accountID, int ownerid, double balance, boolean isApproved, String ownerUsername) {
+	public Account(int accountID, double balance, boolean isApproved, List<String> ownerUsernames, List<Integer> ownerIds) {
 		super();
 		this.accountID = accountID;
-		
-		this.ownerid = ownerid;
 		this.balance = balance;
 		this.isApproved = isApproved;
-		this.ownerUsername = ownerUsername;
+		this.ownerUsernames = ownerUsernames;
+		this.ownerIds = ownerIds;
 	}
 
-	public Account(int ownerid, double balance) {
+	public Account( double balance, List<Integer> ownerIds) {
 		super();
-		this.ownerid = ownerid;
+		this.ownerIds = ownerIds;
 		this.balance = balance;
-	}
-
-	public int getOwnerid() {
-		return ownerid;
-	}
-
-	public void setOwnerid(int ownerid) {
-		this.ownerid = ownerid;
 	}
 
 	public double getBalance() {
@@ -69,12 +61,32 @@ public class Account {
 	}
 	
 	
-	public String getOwnerUsername() {
-		return ownerUsername;
+	
+	public List<String> getOwnerUsernames() {
+		return ownerUsernames;
 	}
 
-	public void setOwnerUsername(String ownerUsername) {
-		this.ownerUsername = ownerUsername;
+
+	public void setOwnerUsernames(List<String> ownerUsernames) {
+		this.ownerUsernames = ownerUsernames;
 	}
 
+
+	public List<Integer> getOwnerIds() {
+		return ownerIds;
+	}
+
+
+	public void setOwnerIds(List<Integer> ownerIds) {
+		this.ownerIds = ownerIds;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Account [accountID=" + accountID + ", balance=" + balance + ", isApproved=" + isApproved
+				+ ", ownerUsernames=" + ownerUsernames + ", ownerIds=" + ownerIds + "]";
+	}
+
+	
 }

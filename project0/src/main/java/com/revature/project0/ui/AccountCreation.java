@@ -16,6 +16,7 @@ public class AccountCreation implements Screen {
 	private List<Account> accountList;
 	private User user;
 	private String choice;
+	private String jointUser;
 	
 	@Override
 	public User render(Scanner conInput, UserService uDao, AccountService aDao, User currentUser) {
@@ -26,14 +27,19 @@ public class AccountCreation implements Screen {
 		System.out.println("Is this going to be a joint account? ");
 		accountType = conInput.nextLine();
 		if (accountType.toLowerCase().charAt(0) == 'y') {
-			// Add Logic here for joint account creation
+			System.out.println("Please enter the username for the other customer on the account:");
+			jointUser = conInput.nextLine();
 		}
 		System.out.println("How much would you like to deposit to start your new account?");
 		newBalance = conInput.nextDouble();
 		conInput.nextLine();
 		Account newAccount = new Account();
 		newAccount.setBalance(newBalance);
-		accountList = aDao.createIndividualAccount(newAccount, user);
+		if (jointUser != null) {
+			accountList = aDao.createJointAccount(newAccount, user, jointUser);
+		}else {
+			accountList = aDao.createIndividualAccount(newAccount, user);
+		}
 		System.out.println(ConsoleColors.RED_BRIGHT + "All new accounts are pending until approved by a bank administrator." + ConsoleColors.RESET);
 		System.out.println("Would you like to do anything else?");
 		choice = conInput.nextLine();
