@@ -55,7 +55,8 @@ public class UserService {
 				LogDriver.log.info(newUser.getUsername() + " has been added");
 				return newUser;
 			} else {
-				throw new RuntimeException("Something went wrong.");
+				System.out.println("Something went wrong.");
+				throw new RuntimeException();
 			}
 		}catch (Exception e) {
 			LogDriver.log.error(e);
@@ -74,6 +75,7 @@ public class UserService {
 				uDao.update(user);
 				LogDriver.log.info(user.getUsername() + " has been updated");
 			} else {
+				System.out.println("That is not a properly formatted email.");
 				throw new RuntimeException("That is not a properly formatted email.");
 			}
 		}catch(Exception e) {

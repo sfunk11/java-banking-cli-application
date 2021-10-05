@@ -39,11 +39,11 @@ public class AccountService {
 				
 				
 			} else {
-				throw new RuntimeException("This account has not yet been approved by the bank.  Please try again later.");
+				throw new RuntimeException();
 			}	
 		}
 		catch (Exception e) {
-			
+			System.out.println("This account has not yet been approved by the bank.  Please try again later.");
 			LogDriver.log.error(e);
 		}
 		
@@ -56,17 +56,20 @@ public class AccountService {
 			if (a.isApproved()) {
 				double newBalance = a.getBalance() - amount;
 				if (newBalance < 0) {
-					throw new RuntimeException("There is not enough money in your account for this transaction.");
+					System.out.println("There is not enough money in your account for this transaction.");
+					throw new RuntimeException();
 				}
 				a.setBalance(newBalance);
 				aDao.update(a);
 				System.out.println("Thank you for your withdrawal. Your new balance is $"+ a.getBalance() + ".");
 				LogDriver.log.info("Account: " + a.getAccountID()+ "    Withdrawal: " + amount);
 			} else {
-				throw new RuntimeException("This account has not yet been approved by the bank.  Please try again later.");
+				System.out.println("This account has not yet been approved by the bank.  Please try again later.");
+				throw new RuntimeException();
 			}
 		}
 		catch (Exception e) {
+			
 			LogDriver.log.error(e);
 			return;
 		}
@@ -78,7 +81,8 @@ public class AccountService {
 			if (from.isApproved() && to.isApproved()) {
 				double newBalance = from.getBalance() - amount;
 				if (newBalance < 0) {
-					throw new RuntimeException("There is not enough money in your account for this transaction.");
+					System.out.println("There is not enough money in your account for this transaction.");
+					throw new RuntimeException();
 				}
 				from.setBalance(newBalance);
 				aDao.update(from);
@@ -89,7 +93,8 @@ public class AccountService {
 				displayListAccountsByOwner(user.getUsername());
 				LogDriver.log.info("Transfer of $" + amount + " from account "+ from.getAccountID()+ " to account " + to.getAccountID());
 			} else {
-				throw new RuntimeException("One of these accounts has not yet been approved by the bank.  Please try again later.");
+				System.out.println("One of these accounts has not yet been approved by the bank.  Please try again later.");
+				throw new RuntimeException();
 			}
 		}
 		catch (Exception e) {
@@ -104,7 +109,8 @@ public class AccountService {
 			Account account = aDao.getAccountbyID(accountID);
 			
 			if (Integer.valueOf(account.getAccountID())==null) {
-				throw new RuntimeException("There is no account with that account number.");
+				System.out.println("There is no account with that account number.");
+				throw new RuntimeException();
 			}
 			
 			System.out.println("Account Number: " + account.getAccountID());
@@ -130,7 +136,8 @@ public class AccountService {
 			List<Account> accountList = aDao.getByUsername(username);
 			
 			if (accountList.get(0)==null) {
-				throw new RuntimeException("There are no accounts for that user.");
+				System.out.println("There are no accounts for that user.");
+				throw new RuntimeException();
 			}
 			for(Account a : accountList) {
 				
@@ -186,7 +193,8 @@ public class AccountService {
 			List<JunctionObject> listofWonder = aDao.getPendingByUser();
 			
 			if (listofWonder.get(0)==null) {
-				throw new RuntimeException("There are no pending accounts at this time.");
+				System.out.println("There are no pending accounts at this time.");
+				throw new RuntimeException();
 			}
 			List<Account> accountList = new ArrayList<>();
 			List<String> userList = new ArrayList<>();
@@ -219,9 +227,8 @@ public class AccountService {
 			
 		}catch(RuntimeException e) {
 			LogDriver.log.error(e);
-			throw e;
 		}
-		
+		return null;
 	}
 	
 	public void approveAccount(int accountId) {
