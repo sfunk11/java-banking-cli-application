@@ -56,7 +56,6 @@ public List<User> getAll() {
 @Override
 public User getByUsername(String username) {
 	
-	
 	try(Connection con = bankCon.getDBConnection()){
 		 
 		

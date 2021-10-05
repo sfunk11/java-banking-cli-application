@@ -24,7 +24,7 @@ public class MainAppDriver {
 		UserDaoImpl uDao = new UserDaoImpl(bankCon);
 		UserService uServ = new UserService(uDao);
 		AccountDaoImpl aDao = new AccountDaoImpl(bankCon);
-		AccountService aServ = new AccountService(aDao);
+		AccountService aServ = new AccountService(aDao, uDao);
 		User currentUser = null;
 		
 		

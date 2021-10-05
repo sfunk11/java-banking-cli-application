@@ -1,24 +1,29 @@
 package com.revature.project0.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.project0.data.AccountDaoImpl;
+import com.revature.project0.data.UserDaoImpl;
 import com.revature.project0.main.LogDriver;
 import com.revature.project0.models.Account;
+import com.revature.project0.models.JunctionObject;
 import com.revature.project0.models.User;
 
 
 public class AccountService {
 	
 	private AccountDaoImpl aDao;
+	private UserDaoImpl uDao;
 	
 	public AccountService() {	
 	
 	}
 	
 	
-	public AccountService(AccountDaoImpl aDao) {
+	public AccountService(AccountDaoImpl aDao, UserDaoImpl uDao) {
 		this.aDao = aDao;
+		this.uDao = uDao;
 	}
 	
 	
@@ -149,8 +154,26 @@ public class AccountService {
 	
 	
 	public List<Account> createIndividualAccount(Account account, User user) {
+		List<Integer> ownerIdList = new ArrayList<>();
+		ownerIdList.add(user.getUserid());
+		account.setOwnerIds(ownerIdList);
 		
-		account.setOwnerid(user.getUserid());
+		aDao.insert(account);
+		List<Account> accountList = displayListAccountsByOwner(user.getUsername());
+		return accountList;
+	}
+	
+	public List<Account> createJointAccount(Account account, User user, String jointUserName) {
+		System.out.println(jointUserName);
+		User jointUser = uDao.getByUsername(jointUserName);
+		
+		
+		List<Integer> ownerIdList = new ArrayList<>();
+		ownerIdList.add(user.getUserid());
+		ownerIdList.add(jointUser.getUserid());
+		account.setOwnerIds(ownerIdList);
+		
+		
 		aDao.insert(account);
 		List<Account> accountList = displayListAccountsByOwner(user.getUsername());
 		return accountList;
@@ -160,26 +183,51 @@ public class AccountService {
 	public List<Account> listPendingAccounts(){
 		
 		try {
-			List<Account> accountList = aDao.getPendingByUser();
-			if (accountList.get(0)==null) {
+			List<JunctionObject> listofWonder = aDao.getPendingByUser();
+			
+			if (listofWonder.get(0)==null) {
 				throw new RuntimeException("There are no pending accounts at this time.");
 			}
-			for(Account a : accountList) {
-			
-				System.out.println(a.getAccountID() + "   " + a.getOwnerUsername() + "  "+ a.getBalance());
+			List<Account> accountList = new ArrayList<>();
+			List<String> userList = new ArrayList<>();
+			List<Integer> idList = new ArrayList<>();
+			accountList.add(new Account(listofWonder.get(0).getAccountId(), listofWonder.get(0).getBalance(), listofWonder.get(0).isApproved(), null, null));
+			userList.add(listofWonder.get(0).getUsername());
+			idList.add(listofWonder.get(0).getUserId());
+			for(int i =1; i<listofWonder.size();i++) {
+				if (listofWonder.get(i).getAccountId() == accountList.get(i-1).getAccountID()){
+					userList.add(listofWonder.get(i).getUsername());
+					idList.add(listofWonder.get(i).getUserId());
+				}else {
+					accountList.get(i-1).setOwnerUsernames(userList);
+					accountList.get(i-1).setOwnerIds(idList);
+					accountList.add(new Account(listofWonder.get(i).getAccountId(), listofWonder.get(i).getBalance(), listofWonder.get(i).isApproved(), null, null));
+					userList = new ArrayList<>();
+					idList = new ArrayList<>();
+					userList.add(listofWonder.get(i).getUsername());
+					idList.add(listofWonder.get(i).getUserId());
+				}
 			}
+			accountList.get(accountList.size()-1).setOwnerUsernames(userList);
+			accountList.get(accountList.size()-1).setOwnerIds(idList);
+				
+			for (Account a : accountList) {
+				System.out.println(a.getAccountID() + "   " + a.getOwnerUsernames().toString() + "  "+ a.getBalance());
+			}
+		
 			return accountList;
 			
 		}catch(RuntimeException e) {
 			LogDriver.log.error(e);
+			throw e;
 		}
 		
-		return null;
 	}
 	
 	public void approveAccount(int accountId) {
 		
 		Account account = aDao.getAccountbyID(accountId);
+		System.out.println(account.toString());
 		account.setApproved(true);
 		aDao.update(account);
 		LogDriver.log.info("Account #" + accountId + " approved.");

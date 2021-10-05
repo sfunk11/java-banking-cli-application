@@ -3,12 +3,13 @@ package com.revature.project0.data;
 import java.util.List;
 
 import com.revature.project0.models.Account;
+import com.revature.project0.models.JunctionObject;
 
 public interface AccountDao {
 
 	List<Account> getAll();
 	
-	List<Account> getPendingByUser();
+	List<JunctionObject> getPendingByUser();
 	
 	List<Account> getByUsername(String username);
 	
