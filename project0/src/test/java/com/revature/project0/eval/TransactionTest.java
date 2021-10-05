@@ -3,6 +3,9 @@ package com.revature.project0.eval;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,8 +31,11 @@ public class TransactionTest {
 	private UserService uServ;
 	private AccountService aServ;
 	private User testuser = new User(1, "Mike", "Thompson", "mthompson", "password", false, false, "mthompson@rmail.com");
-	private Account testAccount = new Account(5, 1, 250.00, true, "mthompson");
-	private Account testA2 = new Account(6,1,500.00, true, "mthompson");
+	List<Integer> idList = new ArrayList<>();
+	List<String> nameList = new ArrayList<>();
+	
+	Account testAccount = new Account(5, 250.00, true, nameList,idList);
+	
 	
 
 	
@@ -38,7 +44,10 @@ public class TransactionTest {
 	public void setUp() throws Exception{
 		MockitoAnnotations.initMocks(this);
 		uServ = new UserService(uDao);
-		aServ = new AccountService(aDao);
+		aServ = new AccountService(aDao, uDao);
+		idList.add(1);
+		idList.add(3);
+		nameList.add("mthompson");
 		when(aDao.getAccountbyID(5)).thenReturn(testAccount);
 		when(uDao.getByUsername("mthompson")).thenReturn(testuser);
 	}
