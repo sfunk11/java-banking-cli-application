@@ -19,6 +19,7 @@ public class CustomerInfo implements Screen {
 		System.out.println("@@@@@@@@@@@@@@             What would you like to Change?        @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               1. Email Address                    @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               2. Password                         @@@@@@@@@@@@@@@@@@@");
+		System.out.println("@@@@@@@@@@@@@@               3. No Changes / Go Back             @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);
 		uDao.displayInfo(currentUser);
 		choice = conInput.nextInt();
@@ -36,6 +37,8 @@ public class CustomerInfo implements Screen {
 			user.setPassword(newPassword);
 			user = uDao.updateUser(user);
 			break;
+		case 3:
+			break;
 		default:
 			System.out.println("Other fields can only be changed by a bank adminstrator.");
 			break;
@@ -50,7 +53,7 @@ public class CustomerInfo implements Screen {
 	public Screen determineNext() {
 
 		Screen nextScreen = null;
-		if(choice2.toLowerCase().charAt(0) == 'y' ) {
+		if(choice2.toLowerCase().charAt(0) == 'y' || choice == 3 ) {
 			nextScreen = new MainMenu();
 		}
 

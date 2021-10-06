@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import com.revature.project0.data.UserDaoImpl;
 import com.revature.project0.main.LogDriver;
 import com.revature.project0.models.User;
+import com.revature.project0.ui.ConsoleColors;
 
 public class UserService {
 
@@ -88,11 +89,14 @@ public class UserService {
 	}
 	
 	public void displayInfo(User user) {
-		System.out.println("First Name: "+ user.getFirstName());
+		System.out.println("\n\n");
+		System.out.println("------------------------------------------");
+		System.out.println(ConsoleColors.PURPLE + "First Name: "+ user.getFirstName());
 		System.out.println("Last Name: "+ user.getLastName());
 		System.out.println("Email Address: "+ user.getEmail());
 		System.out.println("Username: "+ user.getUsername());
-		System.out.println("Password: "+ user.getPassword());
+		System.out.println("Password: "+ user.getPassword() + ConsoleColors.RESET);
+		System.out.println("------------------------------------------");
 	}
 	
 	public User updateUser(User user) {

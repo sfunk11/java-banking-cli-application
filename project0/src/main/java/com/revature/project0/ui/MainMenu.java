@@ -16,7 +16,7 @@ public class MainMenu implements Screen {
 		user = currentUser;
 		System.out.println(ConsoleColors.GREEN + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@             Please Select an Option Below         @@@@@@@@@@@@@@@@@@@");
-		System.out.println("@@@@@@@@@@@@@@               1. Change my personal info          @@@@@@@@@@@@@@@@@@@");
+		System.out.println("@@@@@@@@@@@@@@               1. View / Change my personal info   @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               2. Go to My Open Accounts           @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               3. Open a New Account               @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@               4. Log Out                          @@@@@@@@@@@@@@@@@@@");
