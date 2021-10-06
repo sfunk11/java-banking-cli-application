@@ -203,43 +203,48 @@ public class AccountService {
 			accountList.add(new Account(listofWonder.get(0).getAccountId(), listofWonder.get(0).getBalance(), listofWonder.get(0).isApproved(), null, null));
 			userList.add(listofWonder.get(0).getUsername());
 			idList.add(listofWonder.get(0).getUserId());
+			int j = 0;
 			for(int i =1; i<listofWonder.size();i++) {
-				if (listofWonder.get(i).getAccountId() == accountList.get(i-1).getAccountID()){
+				
+				if (listofWonder.get(i).getAccountId() == accountList.get(j).getAccountID()){
 					userList.add(listofWonder.get(i).getUsername());
 					idList.add(listofWonder.get(i).getUserId());
 				}else {
-					accountList.get(i-1).setOwnerUsernames(userList);
-					accountList.get(i-1).setOwnerIds(idList);
+					accountList.get(j).setOwnerUsernames(userList);
+					accountList.get(j).setOwnerIds(idList);
 					accountList.add(new Account(listofWonder.get(i).getAccountId(), listofWonder.get(i).getBalance(), listofWonder.get(i).isApproved(), null, null));
 					userList = new ArrayList<>();
 					idList = new ArrayList<>();
 					userList.add(listofWonder.get(i).getUsername());
 					idList.add(listofWonder.get(i).getUserId());
+					j++;
 				}
 			}
 			accountList.get(accountList.size()-1).setOwnerUsernames(userList);
 			accountList.get(accountList.size()-1).setOwnerIds(idList);
-			
-			System.out.println("------------------------------------");
+			 
+			System.out.println(ConsoleColors.YELLOW+ "------------------------------------");
 			for (Account a : accountList) {
-				System.out.println(ConsoleColors.YELLOW+ a.getAccountID() + "   " + a.getOwnerUsernames().toString() + "  "+ a.getBalance());
+				System.out.println(a.getAccountID() + "   " + a.getOwnerUsernames().toString() + "  "+ a.getBalance());
 			}
-			System.out.println("------------------------------------");
+			System.out.println("------------------------------------" + ConsoleColors.RESET);
 			
 			return accountList;
 			
 		}catch(RuntimeException e) {
 			LogDriver.log.error(e);
+			throw e;
 		}
-		return null;
+		
 	}
 	
 	public void approveAccount(int accountId) {
 		
 		Account account = aDao.getAccountbyID(accountId);
-		System.out.println(account.toString());
+
 		account.setApproved(true);
 		aDao.update(account);
+		System.out.println("Account #" + accountId + " approved.");
 		LogDriver.log.info("Account #" + accountId + " approved.");
 	}
 	
