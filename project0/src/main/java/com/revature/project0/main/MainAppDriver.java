@@ -41,8 +41,11 @@ public class MainAppDriver {
 		System.out.println("@@@@@@@@@@@@@@          Thank you for using Sam's Bank!          @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@                  Have a Great Day!                @@@@@@@@@@@@@@@@@@@");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + ConsoleColors.RESET);
-
-	
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+		
+		MainAppDriver.main(args);
 	}
 	
 

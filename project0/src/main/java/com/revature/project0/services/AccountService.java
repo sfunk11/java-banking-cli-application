@@ -9,6 +9,7 @@ import com.revature.project0.main.LogDriver;
 import com.revature.project0.models.Account;
 import com.revature.project0.models.JunctionObject;
 import com.revature.project0.models.User;
+import com.revature.project0.ui.ConsoleColors;
 
 
 public class AccountService {
@@ -171,7 +172,7 @@ public class AccountService {
 	}
 	
 	public List<Account> createJointAccount(Account account, User user, String jointUserName) {
-		System.out.println(jointUserName);
+		
 		User jointUser = uDao.getByUsername(jointUserName);
 		
 		
@@ -218,11 +219,13 @@ public class AccountService {
 			}
 			accountList.get(accountList.size()-1).setOwnerUsernames(userList);
 			accountList.get(accountList.size()-1).setOwnerIds(idList);
-				
+			
+			System.out.println("------------------------------------");
 			for (Account a : accountList) {
-				System.out.println(a.getAccountID() + "   " + a.getOwnerUsernames().toString() + "  "+ a.getBalance());
+				System.out.println(ConsoleColors.YELLOW+ a.getAccountID() + "   " + a.getOwnerUsernames().toString() + "  "+ a.getBalance());
 			}
-		
+			System.out.println("------------------------------------");
+			
 			return accountList;
 			
 		}catch(RuntimeException e) {
